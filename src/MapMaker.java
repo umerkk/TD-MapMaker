@@ -43,7 +43,13 @@ import java.awt.event.ActionEvent;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JList;
 import javax.swing.Icon;
-
+/**
+ * 
+ * @author Umer
+ * @author Iftikhar
+ * 
+ *
+ */
 public class MapMaker extends JFrame {
 
 	private JPanel contentPane;
@@ -70,13 +76,42 @@ public class MapMaker extends JFrame {
 	JButton buttonStart = new JButton("Start Point");
 	JButton buttonPath = new JButton("Path");
 	JButton buttonEnd = new JButton("End Point");
-	JButton buttonAddScenery = new JButton("Add Secenery");
 	private final JButton buttonDelete = new JButton("Delete");
 	
 	/**
 	 * Launch the application.
 	 */
 
+	public boolean saveToFile()
+	{
+		try{
+	    	   if(MapValidator.validateMap(mapArray))
+	    	   {
+	    	   JFileChooser fileChooser = new JFileChooser();
+	    	   if (fileChooser.showSaveDialog(MapMaker.this) == JFileChooser.APPROVE_OPTION) {
+	    	     File file = fileChooser.getSelectedFile();
+	    	     // save to file
+	    	  
+	    	   
+	         FileOutputStream fos= new FileOutputStream(file);
+	         ObjectOutputStream oos= new ObjectOutputStream(fos);
+	         oos.writeObject(mapArray);
+	         oos.close();
+	         fos.close();
+	         JOptionPane.showMessageDialog(null, "Your map is saved successfully.");
+	    	   } 
+	    	   }
+	    	   else {
+	    		   JOptionPane.showMessageDialog(null, "Your map is Invalid, it could be due to \r\n1) No Start Point.\r\n2) No End Point\r\n3) No Path exists or there is an orphan path in your map.\r\n\r\nPlease correct the errors to continue");
+	    		   return false;
+	    	   }
+	       }catch(IOException ioe){
+	            ioe.printStackTrace();
+	            return false;
+	        }
+		return true;
+	}
+	
 	/**
 	 * Create the frame.
 	 */
@@ -161,10 +196,6 @@ public class MapMaker extends JFrame {
 		});
 		buttonPath.setBounds(334, 38, 115, 29);
 		panel.add(buttonPath);
-		
-		
-		buttonAddScenery.setBounds(464, 38, 146, 29);
-		panel.add(buttonAddScenery);
 		buttonDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -173,7 +204,7 @@ public class MapMaker extends JFrame {
 				
 			}
 		});
-		buttonDelete.setBounds(632, 38, 146, 29);
+		buttonDelete.setBounds(459, 38, 146, 29);
 		
 		panel.add(buttonDelete);
 		
@@ -189,31 +220,7 @@ public class MapMaker extends JFrame {
 		mntmSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-
-			       try{
-			    	   if(MapValidator.ValidateMap(mapArray))
-			    	   {
-			    	   JFileChooser fileChooser = new JFileChooser();
-			    	   if (fileChooser.showSaveDialog(MapMaker.this) == JFileChooser.APPROVE_OPTION) {
-			    	     File file = fileChooser.getSelectedFile();
-			    	     // save to file
-			    	  
-			    	   
-			         FileOutputStream fos= new FileOutputStream(file);
-			         ObjectOutputStream oos= new ObjectOutputStream(fos);
-			         oos.writeObject(mapArray);
-			         oos.close();
-			         fos.close();
-			         JOptionPane.showMessageDialog(null, "Your map is saved successfully.");
-			    	   } 
-			    	   }
-			    	   else {
-			    		   JOptionPane.showMessageDialog(null, "Your map is Invalid, it could be due to \r\n1) No Start Point.\r\n2) No End Point\r\n3) No Path exists or there is an orphan path in your map.\r\n\r\nPlease correct the errors to continue");
-			    	   }
-			       }catch(IOException ioe){
-			            ioe.printStackTrace();
-			        }
-				
+			       saveToFile();
 				
 			}
 		});

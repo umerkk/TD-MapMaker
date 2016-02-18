@@ -21,6 +21,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.awt.Font;
 
 public class MyGuiFile extends JFrame {
 
@@ -64,7 +65,7 @@ public class MyGuiFile extends JFrame {
 	public MyGuiFile() {
 		setTitle("Tower Defence - Map Builder");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 847, 682);
+		setBounds(100, 100, 497, 251);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -119,21 +120,26 @@ public class MyGuiFile extends JFrame {
 		JSeparator separator = new JSeparator();
 		mnNewMenu.add(separator);
 		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Exit");
-		mnNewMenu.add(mntmNewMenuItem_2);
-		
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
 		
 		JMenuItem mntmAbout = new JMenuItem("About");
+		mntmAbout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				JOptionPane.showMessageDialog(rootPane, "Game: Tower Defence.\r\n Built by:\r\nMuhammad Umer\r\nLokesh\r\nIftekhar Ahmed\r\nAala Sabah");
+			}
+		});
 		mnHelp.add(mntmAbout);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(211, 139, 69, 20);
+		lblNewLabel = new JLabel("Please select an option from the file menu to continue");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel.setBounds(25, 11, 431, 147);
 		contentPane.add(lblNewLabel);
 	}
 
