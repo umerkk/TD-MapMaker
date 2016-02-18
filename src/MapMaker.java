@@ -225,13 +225,6 @@ public class MapMaker extends JFrame {
 		contentPane.add(sc_panel);
 		
 	
-
-		
-		
-		
-		
-		
-		
 		
 		
 }
@@ -242,11 +235,6 @@ public class MapMaker extends JFrame {
       char[] name_exploded = tempName.toCharArray();
       int x = Integer.parseInt(String.valueOf(name_exploded[0]));
       int y = Integer.parseInt(String.valueOf(name_exploded[1]));
-		
-      
-		
-    
-   
     //1=StartPoint, 9999=End, 2=Path, 3=Delete
       if(selectedTool==3)
       {
