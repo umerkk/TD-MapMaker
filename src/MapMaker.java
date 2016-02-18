@@ -25,6 +25,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+
 import java.awt.ScrollPane;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
@@ -32,8 +35,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOError;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.awt.event.ActionEvent;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JList;
@@ -53,7 +58,10 @@ public class MapMaker extends JFrame {
 	boolean isStartAdded = false;
 	boolean isEndAdded = false;
 	
-	int pathTempValue=0;
+	
+	
+	
+	int pathTempValue=2;
 	
 	int[][] mapArray;
 	JPanel[][] panelsHolder;
@@ -68,23 +76,36 @@ public class MapMaker extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MapMaker frame = new MapMaker(5,5);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public MapMaker(int row, int column) {
+	public MapMaker(int row, int column, boolean isExistingFile, int[][] paramMapArray) {
+		
+		this.ArrayRow = row;
+		this.ArrayCol = column;
+	MigLayout myGrid = new MigLayout(); //***************************************************8
+		
+		panel_1.setLayout(myGrid);
+		panel_1.setLayout(new MigLayout());
+		
+		if(isExistingFile)
+		{
+			mapArray = paramMapArray;  //****************mapArray = new int[ArrayRow][ArrayCol]; 
+			panelsHolder = new JPanel[ArrayRow][ArrayCol];
+			DrawMap(mapArray,true, panel_1);
+			
+		} else {
+			
+		mapArray = new int[ArrayRow][ArrayCol];  //****mapArray = new int[ArrayRow][ArrayCol]; 
+		panelsHolder = new JPanel[ArrayRow][ArrayCol];
+		
+		DrawMap(mapArray,false,panel_1);
+		
+		}
+		
+	
+		
 		setTitle("Tower Defence - Map Maker");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 956, 777);
@@ -165,6 +186,37 @@ public class MapMaker extends JFrame {
 		menuBar.add(mnFile);
 		
 		JMenuItem mntmSave = new JMenuItem("Save");
+		mntmSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+
+			       try{
+			    	   if(MapValidator.ValidateMap(mapArray))
+			    	   {
+			    	   JFileChooser fileChooser = new JFileChooser();
+			    	   if (fileChooser.showSaveDialog(MapMaker.this) == JFileChooser.APPROVE_OPTION) {
+			    	     File file = fileChooser.getSelectedFile();
+			    	     // save to file
+			    	  
+			    	   
+			         FileOutputStream fos= new FileOutputStream(file);
+			         ObjectOutputStream oos= new ObjectOutputStream(fos);
+			         oos.writeObject(mapArray);
+			         oos.close();
+			         fos.close();
+			         JOptionPane.showMessageDialog(null, "Your map is saved successfully.");
+			    	   } 
+			    	   }
+			    	   else {
+			    		   JOptionPane.showMessageDialog(null, "Your map is Invalid, it could be due to \r\n1) No Start Point.\r\n2) No End Point\r\n3) No Path exists or there is an orphan path in your map.\r\n\r\nPlease correct the errors to continue");
+			    	   }
+			       }catch(IOException ioe){
+			            ioe.printStackTrace();
+			        }
+				
+				
+			}
+		});
 		mnFile.add(mntmSave);
 		
 		sc_panel.setBounds(10, 172, 914, 527);
@@ -172,89 +224,19 @@ public class MapMaker extends JFrame {
 		sc_panel.add(panel_1,null);
 		contentPane.add(sc_panel);
 		
-		this.ArrayRow = row;
-		this.ArrayCol = column;
-		mapArray = new int[5][5];  //****************************************mapArray = new int[ArrayRow][ArrayCol]; 
-		panelsHolder = new JPanel[5][5];
+	
 
 		
-		MigLayout myGrid = new MigLayout(); //***************************************************8
 		
-		panel_1.setLayout(myGrid);
-		panel_1.setLayout(new MigLayout());
 		
-		for(int k=0;k<ArrayRow;k++)
-		{
-			for(int i=0;i<ArrayCol;i++)
-			{
-				String _append = "";
-				if(i==ArrayCol-1)
-				{
-					_append = ", wrap";
-				} else
-				{
-					
-				}
-				JPanel temp = new JPanel();
-				temp.setName(k +""+ i);
-				temp.setBorder(BorderFactory.createEtchedBorder(1));
-				temp.addMouseListener(new MouseListener() {
-					
-					@Override
-					public void mouseReleased(MouseEvent e) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-					@Override
-					public void mousePressed(MouseEvent e) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-					@Override
-					public void mouseExited(MouseEvent e) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						click(e,temp);
-						
-						
-					}
-				});
-				
-				panel_1.add(temp, "width 80, height 80" + _append);
-				
-				panelsHolder[k][i] = temp;
-				
-			}
-		}
+		
 		
 		
 		
 		
 }
 	public void click(MouseEvent e, JPanel cell) {
-        // handle the event, for instance
-      
-        /*BufferedImage image =null;
-        try {
-         image = ImageIO.read(new File("src//test.png"));
-        } catch (IOException esd)
-        {
-        }
-        JLabel t = new JLabel(new ImageIcon(image));
-        t.setBounds(0, 0, 80,80);
-        */
+  
 		boolean overideExisting=false;
       String tempName = cell.getName();
       char[] name_exploded = tempName.toCharArray();
@@ -263,9 +245,8 @@ public class MapMaker extends JFrame {
 		
       
 		
-      JLabel t = new JLabel();
-      t.setForeground(Color.WHITE);
-      t.setFont(new Font("Arial",0,20));
+    
+   
     //1=StartPoint, 9999=End, 2=Path, 3=Delete
       if(selectedTool==3)
       {
@@ -277,16 +258,16 @@ public class MapMaker extends JFrame {
         	  buttonStart.setEnabled(true);
         	  mapArray[x][y] = 0;
  
-    	  } else if(mapArray[x][y] == 2)
-    	  {
-    		  pathTempValue--;
-    		  mapArray[x][y] = 0;
     	  } else if(mapArray[x][y] == 9999)
     	  {
     		  isEndAdded  = false;
         	  buttonEnd.setEnabled(true);
         	  mapArray[x][y] = 0;
-    	  } else
+    	  } else if(!(mapArray[x][y] == 0))
+    	  {
+    		  pathTempValue--;
+    		  mapArray[x][y] = 0;
+    	  }  else
     	  {
     	  
     	  }
@@ -297,8 +278,8 @@ public class MapMaker extends JFrame {
       } else {
     	  
     	  if(selectedTool==1){
-    	  t.setText("S");
-    	  cell.setBackground(Color.blue);
+    	 DrawMapItem(1, cell);
+    	 
     	  isStartAdded  = true;
     	  buttonStart.setEnabled(false);
     	  
@@ -307,23 +288,22 @@ public class MapMaker extends JFrame {
       {
     	  if(!(mapArray[x][y] == 1 || mapArray[x][y]==9999))
     	  {
-    		  t.setText("P");
-        	  cell.setBackground(Color.GREEN);
+    		  DrawMapItem(2, cell);
+    		//  mapArray[x][y] = pathTempValue;
+    		//  pathTempValue++;
         	  
     	  } else {
     		  overideExisting=true;
     	  }
     	  
       } else if (selectedTool==9999){
-    	  t.setText("E");
-    	  cell.setBackground(Color.red);
+    	  DrawMapItem(9999, cell);
     	  isEndAdded = true;
     	  buttonEnd.setEnabled(false);
     	 
     	  
       }
-    	  t.setBounds(20, 20, 50, 50);
-          cell.add(t);
+    	
           
         
       }
@@ -340,6 +320,198 @@ public class MapMaker extends JFrame {
       selectedTool = -1;
       
     }
+	
+	private void DrawMapItem(int type, JPanel cell)
+	{
+		
+		  JLabel t = new JLabel();
+		  t.setForeground(Color.WHITE);
+		  t.setFont(new Font("Arial",0,20));
+		      
+		      if(type==1)
+		      {
+		    	  t.setText("S");
+		    	  cell.setBackground(Color.blue);
+		    	
+		      } else  if(type==9999)
+		      
+		      {
+		    	  t.setText("X");
+		    	  cell.setBackground(Color.red);
+		    	
+		      } else  if(!(type==0)){
+		    	  t.setText("P");
+		    	  cell.setBackground(Color.green);
+		      }
+		      
+		      
+		      
+		      
+		      t.setBounds(20, 20, 50, 50);
+	          cell.add(t);
+	}
+	
+	
+	
+	private void DrawMap(int[][] mapArray, boolean isExisting, Panel parentPanel)
+	{
+		if(isExisting)
+		{
+		
+			for(int k=0;k<ArrayRow;k++)
+			{
+				for(int i=0;i<ArrayCol;i++)
+				{
+				
+					
+					String _append = "";
+					if(i==ArrayCol-1)
+					{
+						_append = ", wrap";
+					} else
+					{
+						
+					}
+					JPanel temp = new JPanel();
+					temp.setName(k +""+ i);
+					temp.setBorder(BorderFactory.createEtchedBorder(1));
+					temp.addMouseListener(new MouseListener() {
+						
+						@Override
+						public void mouseReleased(MouseEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void mousePressed(MouseEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void mouseExited(MouseEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void mouseEntered(MouseEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void mouseClicked(MouseEvent e) {
+							click(e,temp);
+							
+							
+						}
+					});
+					if(mapArray[k][i]==1)
+				      {
+				   
+				      
+				    	  DrawMapItem(1, temp);
+				    	  isStartAdded  = true;
+				    	  buttonStart.setEnabled(false);
+				    	 
+				      }  else if(mapArray[k][i]==9999)
+				      
+				      {
+				    	  DrawMapItem(9999, temp);
+				    	  isEndAdded = true;
+				    	  buttonEnd.setEnabled(false);
+				    
+				      } else if(mapArray[k][i]==0)
+					      
+				      {
+				    	  DrawMapItem(0, temp);
+				    	 
+				      } else
+				      
+					      
+				      {
+				    	  DrawMapItem(2,temp);
+				    	
+				    	
+				    	
+				      }
+				     
+					
+					parentPanel.add(temp, "width 80, height 80" + _append);
+					
+					panelsHolder[k][i] = temp;
+					
+				}
+				      
+				      
+				}
+				
+			}
+			
+			
+			
+		
+		else
+		{
+			for(int k=0;k<ArrayRow;k++)
+			{
+				for(int i=0;i<ArrayCol;i++)
+				{
+					String _append = "";
+					if(i==ArrayCol-1)
+					{
+						_append = ", wrap";
+					} else
+					{
+						
+					}
+					JPanel temp = new JPanel();
+					temp.setName(k +""+ i);
+					temp.setBorder(BorderFactory.createEtchedBorder(1));
+					temp.addMouseListener(new MouseListener() {
+						
+						@Override
+						public void mouseReleased(MouseEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void mousePressed(MouseEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void mouseExited(MouseEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void mouseEntered(MouseEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void mouseClicked(MouseEvent e) {
+							click(e,temp);
+							
+							
+						}
+					});
+					
+					parentPanel.add(temp, "width 80, height 80" + _append);
+					
+					panelsHolder[k][i] = temp;
+					
+				}
+			}
+		}
+	}
 	
 
 }

@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.net.ssl.SSLEngineResult.Status;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -12,6 +13,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
@@ -47,7 +52,7 @@ public class MyGuiFile extends JFrame {
 		int col_num = (int) mapDlg.col_input.getValue();
 		
 		if(mapDlg.IsCompleted)
-			new MapMaker(row_num,col_num).setVisible(true);
+			new MapMaker(row_num,col_num,false,null).setVisible(true);
 			
 			
 		
@@ -77,6 +82,38 @@ public class MyGuiFile extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Open ");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				JFileChooser fileChooser = new JFileChooser();
+				if (fileChooser.showOpenDialog(MyGuiFile.this) == JFileChooser.APPROVE_OPTION) {
+				  File file = fileChooser.getSelectedFile();
+				  
+				  int[][] mapArray = new int[5][5];  
+				  
+			        try
+			        {
+			            FileInputStream fis = new FileInputStream(file);
+			            ObjectInputStream ois = new ObjectInputStream(fis);
+			            mapArray = (int[][]) ois.readObject();
+			            ois.close();
+			            fis.close();
+			            new MapMaker(mapArray.length,mapArray[0].length,true,mapArray).setVisible(true);
+			            
+			         }catch(IOException ioe){
+			             ioe.printStackTrace();
+			             return;
+			          }catch(ClassNotFoundException c){
+			             System.out.println("Class not found");
+			             c.printStackTrace();
+			             return;
+			          }
+			       
+				  
+				}
+				
+			}
+		});
 		mnNewMenu.add(mntmNewMenuItem_1);
 		
 		JSeparator separator = new JSeparator();
