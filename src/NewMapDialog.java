@@ -27,7 +27,7 @@ public class NewMapDialog extends JDialog {
 	public static void main(String[] args) {
 		try {
 			NewMapDialog dialog = new NewMapDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			//dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();

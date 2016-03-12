@@ -22,12 +22,26 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.Font;
+import javax.swing.JTextPane;
+import javax.swing.JButton;
+import javax.swing.BoxLayout;
+import javax.swing.SwingConstants;
+import net.miginfocom.swing.MigLayout;
+import java.awt.CardLayout;
+import java.awt.Component;
+import javax.swing.JComboBox;
+import java.awt.FlowLayout;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class MyGuiFile extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblNewLabel;
-
+	private String m_selfilname;
+	private JComboBox m_comboBox;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -44,6 +58,26 @@ public class MyGuiFile extends JFrame {
 		});
 	}
 
+	private void updateTxtPn()
+	{
+		//m_comboBox
+		m_comboBox.removeAllItems();
+		m_comboBox.addItem("                              ");
+		
+		try{
+		File folder = new File("");
+		File[] listOfFiles = folder.listFiles();
+		
+		for (File file : listOfFiles) {
+		    if (file.isFile()) {
+		    	m_comboBox.addItem(file.getName());
+		    	//();
+		    }
+		}
+		}catch(Exception ex){}
+	}
+	
+	
 	private void CreateNewMap()
 	{
 		NewMapDialog mapDlg = new NewMapDialog();
@@ -63,9 +97,13 @@ public class MyGuiFile extends JFrame {
 	 * Create the frame.
 	 */
 	public MyGuiFile() {
+		
 		setTitle("Tower Defence - Map Builder");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 497, 251);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 543, 251);
+		
+		m_selfilname = "";
+		
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -120,7 +158,7 @@ public class MyGuiFile extends JFrame {
 		JSeparator separator = new JSeparator();
 		mnNewMenu.add(separator);
 		
-		JMenu mnHelp = new JMenu("Help");
+		JMenu mnHelp = new JMenu("About");
 		menuBar.add(mnHelp);
 		
 		JMenuItem mntmAbout = new JMenuItem("About");
@@ -128,19 +166,68 @@ public class MyGuiFile extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				
-				JOptionPane.showMessageDialog(rootPane, "Game: Tower Defence.\r\n Built by:\r\nMuhammad Umer\r\nLokesh\r\nIftekhar Ahmed\r\nAala Sabah");
+				JOptionPane.showMessageDialog(rootPane, "This program is for building a map for the Tower Defence Game.\r\n Built by:\r\nMuhammad Umer\r\nLokesh\r\nIftekhar Ahmed");
 			}
 		});
 		mnHelp.add(mntmAbout);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		lblNewLabel = new JLabel("Please select an option from the file menu to continue");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel.setBounds(25, 11, 431, 147);
-		contentPane.add(lblNewLabel);
+		lblNewLabel = new JLabel("Please select a file from below or an option from the file menu.");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		contentPane.add(lblNewLabel, BorderLayout.NORTH);
+		
+		JPanel panel = new JPanel();
+		contentPane.add(panel, BorderLayout.CENTER);
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		m_comboBox = new JComboBox();
+		m_comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) 
+			{
+				if (arg0.getStateChange() == ItemEvent.SELECTED) 
+					m_selfilname = (String)arg0.getItem();
+				if(m_selfilname.trim().length() == 0)
+					m_selfilname = "";
+			}
+		});
+		m_comboBox.setModel(new DefaultComboBoxModel(new String[] {"                              "}));
+		panel.add(m_comboBox);
+		
+		JButton btnNewButton = new JButton("Open File");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				if(m_selfilname.trim().length() == 0)
+					return;
+				
+				File file = new File(m_selfilname);
+				  
+				int[][] mapArray;  
+				  
+		        try
+		        {
+		            FileInputStream fis = new FileInputStream(file);
+		            ObjectInputStream ois = new ObjectInputStream(fis);
+		            mapArray = (int[][]) ois.readObject();
+		            ois.close();
+		            fis.close();
+		            new MapMaker(mapArray.length,mapArray[0].length,true,mapArray).setVisible(true);
+		            
+		         }catch(IOException ioe){
+		             ioe.printStackTrace();
+		             return;
+		          }catch(ClassNotFoundException c){
+		             System.out.println("Class not found");
+		             c.printStackTrace();
+		             return;
+		          }
+			}
+		});
+		panel.add(btnNewButton);
+		updateTxtPn();
 	}
 
 }
