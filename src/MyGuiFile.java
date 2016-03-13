@@ -41,6 +41,7 @@ public class MyGuiFile extends JFrame {
 	private JLabel lblNewLabel;
 	private String m_selfilname;
 	private JComboBox m_comboBox;
+	private final String DEFAULTFILEPATH = System.getProperty("user.dir");
 	
 	/**
 	 * Launch the application.
@@ -65,11 +66,12 @@ public class MyGuiFile extends JFrame {
 		m_comboBox.addItem("                              ");
 		
 		try{
-		File folder = new File("");
+		File folder = new File(DEFAULTFILEPATH);
 		File[] listOfFiles = folder.listFiles();
 		
 		for (File file : listOfFiles) {
-		    if (file.isFile()) {
+		    if (file.isFile() && file.getName().endsWith(".txt")) 
+		    {
 		    	m_comboBox.addItem(file.getName());
 		    	//();
 		    }
@@ -90,7 +92,7 @@ public class MyGuiFile extends JFrame {
 			new MapMaker(row_num,col_num,false,null).setVisible(true);
 			
 			
-		
+		updateTxtPn();
 	}
 	
 	/**
@@ -125,6 +127,7 @@ public class MyGuiFile extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setCurrentDirectory(new File(DEFAULTFILEPATH));
 				if (fileChooser.showOpenDialog(MyGuiFile.this) == JFileChooser.APPROVE_OPTION) {
 				  File file = fileChooser.getSelectedFile();
 				  
@@ -139,6 +142,7 @@ public class MyGuiFile extends JFrame {
 			            fis.close();
 			            new MapMaker(mapArray.length,mapArray[0].length,true,mapArray).setVisible(true);
 			            
+			            updateTxtPn();
 			         }catch(IOException ioe){
 			             ioe.printStackTrace();
 			             return;

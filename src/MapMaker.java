@@ -77,6 +77,7 @@ public class MapMaker extends JFrame {
 	JButton buttonPath = new JButton("Path");
 	JButton buttonEnd = new JButton("End Point");
 	private final JButton buttonDelete = new JButton("Delete");
+	private final String DEFAULTFILEPATH = System.getProperty("user.dir");
 	
 	/**
 	 * Launch the application.
@@ -88,6 +89,7 @@ public class MapMaker extends JFrame {
 	    	   if(MapValidator.validateMap(mapArray))
 	    	   {
 	    	   JFileChooser fileChooser = new JFileChooser();
+	    	   fileChooser.setCurrentDirectory(new File(DEFAULTFILEPATH));
 	    	   if (fileChooser.showSaveDialog(MapMaker.this) == JFileChooser.APPROVE_OPTION) {
 	    	     File file = fileChooser.getSelectedFile();
 	    	     // save to file
