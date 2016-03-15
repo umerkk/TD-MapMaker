@@ -8,10 +8,9 @@
 public class MapValidator {
 
 	
-	public static boolean validateMap(int[][] paramMap)
+	public static boolean validateMap(int[][] maparray)
 	{
 		
-		int[][] maparray = paramMap;
 		int[][] maparrclone = new int[maparray.length][]; 
 		boolean isstart=false;
 		boolean isend = false;

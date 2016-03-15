@@ -43,6 +43,8 @@ import java.awt.event.ActionEvent;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JList;
 import javax.swing.Icon;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 /**
  * 
  * @author Umer
@@ -53,23 +55,18 @@ import javax.swing.Icon;
 public class MapMaker extends JFrame {
 
 	private JPanel contentPane;
+	private MapModel m_currmap;
 	
 	ScrollPane sc_panel = new ScrollPane();
 	Panel panel_1 = new Panel();
-	int ArrayRow;
-	int ArrayCol;
 	
 	int selectedTool = 0; //1=StartPoint, 9999=End, 2=Path
 	int pathCount=2;
 	boolean isStartAdded = false;
 	boolean isEndAdded = false;
 	
-	
-	
-	
 	int pathTempValue=2;
 	
-	int[][] mapArray;
 	JPanel[][] panelsHolder;
 	
 	
@@ -86,10 +83,11 @@ public class MapMaker extends JFrame {
 	public boolean saveToFile()
 	{
 		try{
-	    	   if(MapValidator.validateMap(mapArray))
+	    	   if(m_currmap.validateMap())
 	    	   {
 	    	   JFileChooser fileChooser = new JFileChooser();
 	    	   fileChooser.setCurrentDirectory(new File(DEFAULTFILEPATH));
+	    	   fileChooser.setSelectedFile(new File(m_currmap + ".map"));
 	    	   if (fileChooser.showSaveDialog(MapMaker.this) == JFileChooser.APPROVE_OPTION) {
 	    	     File file = fileChooser.getSelectedFile();
 	    	     // save to file
@@ -97,7 +95,7 @@ public class MapMaker extends JFrame {
 	    	   
 	         FileOutputStream fos= new FileOutputStream(file);
 	         ObjectOutputStream oos= new ObjectOutputStream(fos);
-	         oos.writeObject(mapArray);
+	         oos.writeObject(m_currmap.GetMapArray());
 	         oos.close();
 	         fos.close();
 	         JOptionPane.showMessageDialog(null, "Your map is saved successfully.");
@@ -117,32 +115,23 @@ public class MapMaker extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MapMaker(int row, int column, boolean isExistingFile, int[][] paramMapArray) {
-		
-		this.ArrayRow = row;
-		this.ArrayCol = column;
-	MigLayout myGrid = new MigLayout(); //***************************************************8
+	public MapMaker(MapModel mapmdlobj, boolean isExistingFile, MyGuiFile prntfile) 
+	{
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				prntfile.updateTxtPn();
+			}
+		});
+		m_currmap = mapmdlobj;
+		MigLayout myGrid = new MigLayout(); //***************************************************8
 		
 		panel_1.setLayout(myGrid);
 		panel_1.setLayout(new MigLayout());
 		
-		if(isExistingFile)
-		{
-			mapArray = paramMapArray;  //****************mapArray = new int[ArrayRow][ArrayCol]; 
-			panelsHolder = new JPanel[ArrayRow][ArrayCol];
-			DrawMap(mapArray,true, panel_1);
+		panelsHolder = new JPanel[m_currmap.rsize][m_currmap.csize];
+		DrawMap(isExistingFile, panel_1);
 			
-		} else {
-			
-		mapArray = new int[ArrayRow][ArrayCol];  //****mapArray = new int[ArrayRow][ArrayCol]; 
-		panelsHolder = new JPanel[ArrayRow][ArrayCol];
-		
-		DrawMap(mapArray,false,panel_1);
-		
-		}
-		
-	
-		
 		setTitle("Tower Defence - Map Maker");
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 956, 777);
@@ -232,14 +221,13 @@ public class MapMaker extends JFrame {
 		
 		sc_panel.add(panel_1,null);
 		contentPane.add(sc_panel);
-		
-	
-		
+			
 		
 }
+	
 	public void click(MouseEvent e, JPanel cell) {
   
-		boolean overideExisting=false;
+	  boolean overideExisting=false;
       String tempName = cell.getName();
       char[] name_exploded = tempName.toCharArray();
       int x = Integer.parseInt(String.valueOf(name_exploded[0]));
@@ -249,27 +237,25 @@ public class MapMaker extends JFrame {
       {
     	  
   		
-    	  if(mapArray[x][y] == 1)
+    	  if(m_currmap.GetMapArray()[x][y] == 1)
     	  {
-    		isStartAdded  = false;
+    		  isStartAdded  = false;
         	  buttonStart.setEnabled(true);
-        	  mapArray[x][y] = 0;
- 
-    	  } else if(mapArray[x][y] == 9999)
+        	  
+    	  } 
+    	  else if(m_currmap.GetMapArray()[x][y] == 9999)
     	  {
     		  isEndAdded  = false;
         	  buttonEnd.setEnabled(true);
-        	  mapArray[x][y] = 0;
-    	  } else if(!(mapArray[x][y] == 0))
+    	  } 
+    	  else if(m_currmap.GetMapArray()[x][y] != 0)
     	  {
     		  pathTempValue--;
-    		  mapArray[x][y] = 0;
-    	  }  else
-    	  {
+    	  }  
+    	  m_currmap.DeleteFromMap(x, y);
     	  
-    	  }
     	  cell.removeAll();
-    		cell.setBackground(null);
+    	  cell.setBackground(null);
     	  panel_1.revalidate();
     	  panel_1.repaint();
       } else {
@@ -283,7 +269,7 @@ public class MapMaker extends JFrame {
     	   
       } else if(selectedTool == 2)
       {
-    	  if(!(mapArray[x][y] == 1 || mapArray[x][y]==9999))
+    	  if(m_currmap.GetMapArray()[x][y] != 1 && m_currmap.GetMapArray()[x][y] != 9999)
     	  {
     		  DrawMapItem(2, cell);
     		//  mapArray[x][y] = pathTempValue;
@@ -304,15 +290,15 @@ public class MapMaker extends JFrame {
           
         
       }
-      if(selectedTool != 3 && overideExisting!=true)
+      if(selectedTool != 3 && !overideExisting)
     	  {
     	  if(selectedTool==2)
     	  {
-    		  mapArray[x][y] = pathTempValue;
+    		  m_currmap.AddToMap(pathTempValue, x, y);
     		  pathTempValue++;
     	  }
     	  else
-    		  mapArray[x][y] = selectedTool;
+    		  m_currmap.AddToMap(selectedTool, x, y);
     	  }
       selectedTool = -1;
       
@@ -350,19 +336,19 @@ public class MapMaker extends JFrame {
 	
 	
 	
-	private void DrawMap(int[][] mapArray, boolean isExisting, Panel parentPanel)
+	private void DrawMap(boolean isExisting, Panel parentPanel)
 	{
 		if(isExisting)
 		{
 		
-			for(int k=0;k<ArrayRow;k++)
+			for(int k=0;k < m_currmap.rsize;k++)
 			{
-				for(int i=0;i<ArrayCol;i++)
+				for(int i=0;i < m_currmap.csize;i++)
 				{
 				
 					
 					String _append = "";
-					if(i==ArrayCol-1)
+					if(i == m_currmap.csize-1)
 					{
 						_append = ", wrap";
 					} else
@@ -405,7 +391,7 @@ public class MapMaker extends JFrame {
 							
 						}
 					});
-					if(mapArray[k][i]==1)
+					if(m_currmap.GetMapArray()[k][i] == 1)
 				      {
 				   
 				      
@@ -413,14 +399,14 @@ public class MapMaker extends JFrame {
 				    	  isStartAdded  = true;
 				    	  buttonStart.setEnabled(false);
 				    	 
-				      }  else if(mapArray[k][i]==9999)
+				      }  else if(m_currmap.GetMapArray()[k][i] == 9999)
 				      
 				      {
 				    	  DrawMapItem(9999, temp);
 				    	  isEndAdded = true;
 				    	  buttonEnd.setEnabled(false);
 				    
-				      } else if(mapArray[k][i]==0)
+				      } else if(m_currmap.GetMapArray()[k][i] == 0)
 					      
 				      {
 				    	  DrawMapItem(0, temp);
@@ -452,12 +438,12 @@ public class MapMaker extends JFrame {
 		
 		else
 		{
-			for(int k=0;k<ArrayRow;k++)
+			for(int k=0;k<m_currmap.rsize;k++)
 			{
-				for(int i=0;i<ArrayCol;i++)
+				for(int i=0;i<m_currmap.csize;i++)
 				{
 					String _append = "";
-					if(i==ArrayCol-1)
+					if(i==m_currmap.csize-1)
 					{
 						_append = ", wrap";
 					} else

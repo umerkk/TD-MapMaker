@@ -21,8 +21,8 @@ public class MapMakerTest {
 		
 		int[][] readarr = new int[5][5];  
 			  
-		MapMaker mapmkrobj = new MapMaker(4, 4, true, maparr);
-		mapmkrobj.saveToFile();
+	//	MapMaker mapmkrobj = new MapMaker(4, 4, true, maparr);
+		//mapmkrobj.saveToFile();
 		JFileChooser fileChooser = new JFileChooser();
 		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) 
 		{
