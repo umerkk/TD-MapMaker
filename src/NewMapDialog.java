@@ -61,11 +61,11 @@ public class NewMapDialog extends JDialog {
 		JLabel lblColumn = new JLabel("Column");
 		lblColumn.setBounds(15, 174, 69, 20);
 		contentPanel.add(lblColumn);
-		row_input.setModel(new SpinnerNumberModel(2, 2, 20, 1));
+		row_input.setModel(new SpinnerNumberModel(2, 2, 9, 1));
 		
 		row_input.setBounds(120, 109, 83, 26);
 		contentPanel.add(row_input);
-		col_input.setModel(new SpinnerNumberModel(2, 2, 20, 1));
+		col_input.setModel(new SpinnerNumberModel(2, 2, 9, 1));
 		
 	
 		col_input.setBounds(120, 171, 83, 26);
