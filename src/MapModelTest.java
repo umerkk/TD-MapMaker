@@ -12,9 +12,9 @@ public class MapModelTest {
 	@Test
 	public void testnostartpoint() 
 	{
-		int[][] maparr =  new int[][]{ { 1, 1, 0, 0 },
+		int[][] maparr =  new int[][]{ { 0, 1, 0, 0 },
 			{ 0, 2, 3, 0},
-			{ 0, 0, 4, 0},
+			{ 0, 5, 4, 0},
 			{ 0, 0, 9999, 0}}; 
 		
 		MapModel testmapobj = new MapModel("testmap", maparr);

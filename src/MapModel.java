@@ -73,6 +73,7 @@ class MapModel {
 		for(int i = 0; i < rsize; i++)
 			maparrclone[i] = maparray[i].clone();
 		
+		/*
 		// check for orphan path, start point or end point
 		for(int k=0;k<rsize;k++)
 		{
@@ -89,9 +90,19 @@ class MapModel {
 					}
 					else if (i == 0)
 					{
-						if(maparray[k+1][i] == 0 && maparray[k-1][i] == 0 && maparray[k][i+1] == 0)
+						if(k > 0 && k < rsize - 1)
 						{
-							return false;
+							if(maparray[k+1][i] == 0 && maparray[k-1][i] == 0 && maparray[k][i+1] == 0)
+							{
+								return false;
+							}
+						}
+						else if(k == 0)
+						{
+							if(maparray[k+1][i] == 0 && maparray[k-1][i] == 0 && maparray[k][i+1] == 0)
+							{
+								return false;
+							}
 						}
 					}
 					else if (i == csize-1)
@@ -118,7 +129,7 @@ class MapModel {
 				}	
 			}
 		}
-		
+		*/
 		// breadth first search algorithm implementation
 		String[] nodequ = new String[81];
 		int qstrt = 0, qend = 0;
