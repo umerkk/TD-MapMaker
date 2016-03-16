@@ -1,43 +1,117 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-
-import javax.swing.JFileChooser;
-
-import org.junit.Assert;
 import org.junit.Test;
 
 public class MapMakerTest {
 
+
+
+	/**
+	 * Method to test if the map has a starting point
+	 */
 	@Test
-	public void testSaveToFile1() 
+	public void testNoStartPoint() 
 	{
-		int[][] maparr =  new int[][]{ { 0, 1, 0, 0 },
+		int[][] mapArray =  new int[][]{ { 0, 0, 0, 0 },
 			{ 0, 2, 3, 0},
 			{ 0, 0, 4, 0},
 			{ 0, 0, 9999, 0}}; 
-		
-		int[][] readarr = new int[5][5];  
-			  
-	//	MapMaker mapmkrobj = new MapMaker(4, 4, true, maparr);
-		//mapmkrobj.saveToFile();
-		JFileChooser fileChooser = new JFileChooser();
-		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) 
-		{
-			File file = fileChooser.getSelectedFile();
-			
-	        try
-	        {
-	            FileInputStream fis = new FileInputStream(file);
-	            ObjectInputStream ois = new ObjectInputStream(fis);
-	            readarr = (int[][]) ois.readObject();
-	            ois.close();
-	            fis.close();
-	        }catch(Exception ex){}
-		}
-		Assert.assertArrayEquals(maparr, readarr);
+			MapModel testmapobj = new MapModel("testmap", mapArray);
+			assertFalse(testmapobj.validateMap());
+
 	}
+	
+	/**
+	 * Method to test if the map has an end point
+	 */
+	@Test
+	public void testNoExitPoint() 
+	{
+		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
+			{ 0, 2, 3, 0},
+			{ 0, 0, 4, 0},
+			{ 0, 0, 5, 0}}; 
+			MapModel testmapobj = new MapModel("testmap", mapArray);
+			assertFalse(testmapobj.validateMap());
+
+	}
+	
+	/**
+	 * Method to test if the map has a continuous path
+	 */
+	@Test
+	public void testPathContinuity() 
+	{
+		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
+			{ 0, 2, 3, 0},
+			{ 0, 0, 0, 0},
+			{ 0, 0, 9999, 0}}; 
+			MapModel testmapobj = new MapModel("testmap", mapArray);
+			assertFalse(testmapobj.validateMap());
+
+	}
+	
+	/**
+	 * Method to test if the map has an orphan path
+	 */
+	@Test
+	public void testPathOrphan() 
+	{
+		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
+			{ 0, 2, 3, 0},
+			{ 0, 0, 4, 0},
+			{ 1, 0, 9999, 0}}; 
+			MapModel testmapobj = new MapModel("testmap", mapArray);
+			assertFalse(testmapobj.validateMap());
+
+	}
+	
+	/**
+	 * Tests if the map has multiple start points
+	 */
+	@Test
+	public void testDuplicateStartPoints() 
+	{
+		int[][] mapArray =  new int[][]{ { 1, 1, 0, 0 },
+			{ 0, 2, 3, 0},
+			{ 0, 0, 4, 0},
+			{ 0, 0, 9999, 0}}; 
+			MapModel testmapobj = new MapModel("testmap", mapArray);
+			assertFalse(testmapobj.validateMap());
+
+	}
+	
+	/**
+	 * Tests if the map has multiple exit points
+	 */
+	@Test
+	public void testDuplicateExitPoints() 
+	{
+		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
+			{ 0, 2, 3, 0},
+			{ 0, 0, 4, 0},
+			{ 0, 0, 9999, 9999}}; 
+			MapModel testmapobj = new MapModel("testmap", mapArray);
+			assertFalse(testmapobj.validateMap());
+
+	}
+	
+	/**
+	 * Tests if the map has duplicate paths
+	 */
+	@Test
+	public void testMultiplePaths() 
+	{
+		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
+			{ 0, 2, 3, 0},
+			{ 0, 5, 4, 0},
+			{ 0, 6, 9999, 0}}; 
+			MapModel testmapobj = new MapModel("testmap", mapArray);
+			assertTrue(testmapobj.validateMap());
+
+	}
+
+	
 
 }
