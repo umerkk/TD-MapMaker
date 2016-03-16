@@ -43,6 +43,8 @@ public class MyGuiFile extends JFrame {
 	private final String DEFAULTFILEPATH = System.getProperty("user.dir");
 	private MapModel m_mapobj;
 	
+	public MapModel getMapModelObj() {return m_mapobj;}
+	
 	/**
 	 * Main method of the class where the execution begins. The applications is invoked from this main method. It takes command line arguments 
 	 * which for now is not used.
