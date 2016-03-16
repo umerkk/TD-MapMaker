@@ -313,7 +313,9 @@ public class MapMaker extends JFrame {
     	  else
     		  m_currmap.AddToMap(selectedTool, x, y);
     	  }
-      selectedTool = -1;
+      
+      if(selectedTool == 1 || selectedTool == 9999)
+    	  selectedTool = -1;
       
     }
 	

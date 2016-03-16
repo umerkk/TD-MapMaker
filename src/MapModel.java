@@ -68,7 +68,7 @@ class MapModel {
 	{
 		
 		int[][] maparrclone = new int[rsize][]; 
-		boolean isatleastonepathexists = false;
+		int strtcnt = 0, endcnt = 0;
 		
 		for(int i = 0; i < rsize; i++)
 			maparrclone[i] = maparray[i].clone();
@@ -124,7 +124,9 @@ class MapModel {
 		    i = Integer.parseInt(String.valueOf(currele[1]));
 		    
 		    if(maparray[k][i] == 9999)
-		    	isatleastonepathexists = true;
+		    	strtcnt++;
+		    if(maparray[k][i] == 1)
+		    	endcnt++;
 		    
 		    if(k < rsize - 1 && maparray[k + 1][i] > 1)
 			{
@@ -170,7 +172,7 @@ class MapModel {
 		    	maxdist = distarr[k][i];
 		}
 		
-		if(!isatleastonepathexists)
+		if(strtcnt != 1 || endcnt != 1)
 			return false;
 		
 		// identify the shortest path
