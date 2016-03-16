@@ -30,6 +30,11 @@ import javax.swing.border.EmptyBorder;
 /*
  * This is the main view form which is displayed 1st to the user. The user can decide weather to create a new map or open an existing file 
  * for editing. 
+ * 
+ * @author Lokesh
+ * @author Armaghan
+ * @version 1.0.1.0
+ * 
  */
 public class MyGuiFile extends JFrame {
 
