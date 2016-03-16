@@ -80,9 +80,40 @@ class MapModel {
 			{
 				if(maparray[k][i] != 0 )
 				{
-					if(maparray[k+1][i] == 0 && maparray[k-1][i] == 0 && maparray[k][i+1] == 0 &&  maparray[k][i-1] == 0)
+					if(i > 0 && i < csize - 1 && k > 0 && k < rsize - 1)
 					{
-						return false;
+						if(maparray[k+1][i] == 0 && maparray[k-1][i] == 0 && maparray[k][i+1] == 0 &&  maparray[k][i-1] == 0)
+						{
+							return false;
+						}
+					}
+					else if (i == 0)
+					{
+						if(maparray[k+1][i] == 0 && maparray[k-1][i] == 0 && maparray[k][i+1] == 0)
+						{
+							return false;
+						}
+					}
+					else if (i == csize-1)
+					{
+						if(maparray[k+1][i] == 0 && maparray[k-1][i] == 0 &&  maparray[k][i-1] == 0)
+						{
+							return false;
+						}
+					}
+					else if (k == 0)
+					{
+						if(maparray[k+1][i] == 0 && maparray[k][i+1] == 0 &&  maparray[k][i-1] == 0)
+						{
+							return false;
+						}
+					}
+					else if (k == rsize - 1)
+					{
+						if(maparray[k-1][i] == 0 && maparray[k][i+1] == 0 &&  maparray[k][i-1] == 0)
+						{
+							return false;
+						}
 					}
 				}	
 			}
@@ -124,9 +155,9 @@ class MapModel {
 		    i = Integer.parseInt(String.valueOf(currele[1]));
 		    
 		    if(maparray[k][i] == 9999)
-		    	strtcnt++;
-		    if(maparray[k][i] == 1)
 		    	endcnt++;
+		    if(maparray[k][i] == 1)
+		    	strtcnt++;
 		    
 		    if(k < rsize - 1 && maparray[k + 1][i] > 1)
 			{
@@ -191,11 +222,14 @@ class MapModel {
 				}
 				else
 					maparrclone[k][i] = 0;
+				
+				if(distarr[k][i] == 999 && maparray[k][i] > 1 && maparray[k][i] < 9999)
+					return false;
 			}
 		}
 		k = Integer.parseInt(String.valueOf(currele[0]));
 	    i = Integer.parseInt(String.valueOf(currele[1]));
-		
+
 	    while(maparrclone[k][i] != 1)
 	    {
 	    	distarr[k][i] = 999;
