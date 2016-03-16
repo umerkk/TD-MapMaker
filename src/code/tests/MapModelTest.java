@@ -1,7 +1,9 @@
+package code.tests;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import code.map.MapModel;
 import junit.framework.Assert;
 
 public class MapModelTest {

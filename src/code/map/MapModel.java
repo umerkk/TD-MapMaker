@@ -1,5 +1,6 @@
+package code.map;
 
-class MapModel {
+public class MapModel {
 
 	private String mapname;
 	private int[][] maparray;
