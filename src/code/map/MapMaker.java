@@ -1,51 +1,33 @@
 package code.map;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.Image;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.text.StyledEditorKit.FontSizeAction;
-import javax.swing.text.html.ImageView;
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-
 import java.awt.Panel;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-
 import java.awt.ScrollPane;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOError;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.awt.event.ActionEvent;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JList;
-import javax.swing.Icon;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import net.miginfocom.swing.MigLayout;
 /**
  * 
  * @author Umer
@@ -88,7 +70,7 @@ public class MapMaker extends JFrame {
 	    	   {
 	    	   JFileChooser fileChooser = new JFileChooser();
 	    	   fileChooser.setCurrentDirectory(new File(DEFAULTFILEPATH));
-	    	   fileChooser.setSelectedFile(new File(m_currmap + ".map"));
+	    	   fileChooser.setSelectedFile(new File(m_currmap.GetName() + ".map"));
 	    	   if (fileChooser.showSaveDialog(MapMaker.this) == JFileChooser.APPROVE_OPTION) {
 	    	     File file = fileChooser.getSelectedFile();
 	    	     // save to file

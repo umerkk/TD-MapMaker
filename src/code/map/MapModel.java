@@ -15,9 +15,9 @@ public class MapModel {
 		this.maparray = _maparray;
 	}
 
-	public MapModel(String mapn, int row, int col)
+	public MapModel(int row, int col)
 	{
-		this.mapname = mapn;
+		this.mapname = this.toString().substring(9);
 		rsize = row;
 		csize = col;
 		this.maparray = new int[row][col];
@@ -70,67 +70,12 @@ public class MapModel {
 		
 		int[][] maparrclone = new int[rsize][]; 
 		int strtcnt = 0, endcnt = 0;
+		boolean ispathexist = false;
 		
 		for(int i = 0; i < rsize; i++)
 			maparrclone[i] = maparray[i].clone();
 		
-		/*
-		// check for orphan path, start point or end point
-		for(int k=0;k<rsize;k++)
-		{
-			for(int i=0;i<csize;i++)
-			{
-				if(maparray[k][i] != 0 )
-				{
-					if(i > 0 && i < csize - 1 && k > 0 && k < rsize - 1)
-					{
-						if(maparray[k+1][i] == 0 && maparray[k-1][i] == 0 && maparray[k][i+1] == 0 &&  maparray[k][i-1] == 0)
-						{
-							return false;
-						}
-					}
-					else if (i == 0)
-					{
-						if(k > 0 && k < rsize - 1)
-						{
-							if(maparray[k+1][i] == 0 && maparray[k-1][i] == 0 && maparray[k][i+1] == 0)
-							{
-								return false;
-							}
-						}
-						else if(k == 0)
-						{
-							if(maparray[k+1][i] == 0 && maparray[k-1][i] == 0 && maparray[k][i+1] == 0)
-							{
-								return false;
-							}
-						}
-					}
-					else if (i == csize-1)
-					{
-						if(maparray[k+1][i] == 0 && maparray[k-1][i] == 0 &&  maparray[k][i-1] == 0)
-						{
-							return false;
-						}
-					}
-					else if (k == 0)
-					{
-						if(maparray[k+1][i] == 0 && maparray[k][i+1] == 0 &&  maparray[k][i-1] == 0)
-						{
-							return false;
-						}
-					}
-					else if (k == rsize - 1)
-					{
-						if(maparray[k-1][i] == 0 && maparray[k][i+1] == 0 &&  maparray[k][i-1] == 0)
-						{
-							return false;
-						}
-					}
-				}	
-			}
-		}
-		*/
+		
 		// breadth first search algorithm implementation
 		String[] nodequ = new String[81];
 		int qstrt = 0, qend = 0;
@@ -168,8 +113,10 @@ public class MapModel {
 		    
 		    if(maparray[k][i] == 9999)
 		    	endcnt++;
-		    if(maparray[k][i] == 1)
+		    else if(maparray[k][i] == 1)
 		    	strtcnt++;
+		    else if(maparray[k][i] > 1)
+		    	ispathexist = true;
 		    
 		    if(k < rsize - 1 && maparray[k + 1][i] > 1)
 			{
@@ -215,7 +162,7 @@ public class MapModel {
 		    	maxdist = distarr[k][i];
 		}
 		
-		if(strtcnt != 1 || endcnt != 1)
+		if(strtcnt != 1 || endcnt != 1 || !ispathexist)
 			return false;
 		
 		// identify the shortest path

@@ -1,17 +1,15 @@
 package code.map;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.time.LocalDateTime;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -129,8 +127,7 @@ public class MyGuiFile extends JFrame {
 		
 		if(mapDlg.IsCompleted)
 		{
-			m_mapobj = new MapModel("newmmapfile_" + LocalDateTime.now().getSecond() 
-						+ LocalDateTime.now().getMinute() + + LocalDateTime.now().getHour(), rownum, colnum);
+			m_mapobj = new MapModel(rownum, colnum);
 			new MapMaker(m_mapobj, false, this).setVisible(true);
 		}	
 			
