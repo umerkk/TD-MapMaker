@@ -26,6 +26,11 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.border.EmptyBorder;
 
+
+/*
+ * This is the main view form which is displayed 1st to the user. The user can decide weather to create a new map or open an existing file 
+ * for editing. 
+ */
 public class MyGuiFile extends JFrame {
 
 	private JPanel contentPane;

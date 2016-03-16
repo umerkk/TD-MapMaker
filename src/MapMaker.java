@@ -126,6 +126,19 @@ public class MapMaker extends JFrame {
 		m_currmap = mapmdlobj;
 		MigLayout myGrid = new MigLayout(); //***************************************************8
 		
+		if(isExistingFile)
+		{
+			for(int k=0;k < m_currmap.rsize;k++)
+			{
+				for(int i=0;i < m_currmap.csize;i++)
+				{
+					if(pathTempValue < m_currmap.GetMapArray()[k][i] && m_currmap.GetMapArray()[k][i] != 9999)
+						pathTempValue = m_currmap.GetMapArray()[k][i];
+				}
+			}
+			pathTempValue++;
+		}
+		
 		panel_1.setLayout(myGrid);
 		panel_1.setLayout(new MigLayout());
 		
@@ -248,7 +261,7 @@ public class MapMaker extends JFrame {
     		  isEndAdded  = false;
         	  buttonEnd.setEnabled(true);
     	  } 
-    	  else if(m_currmap.GetMapArray()[x][y] != 0)
+    	  else if(m_currmap.GetMapArray()[x][y] > 1)
     	  {
     		  pathTempValue--;
     	  }  
