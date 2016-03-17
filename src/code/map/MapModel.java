@@ -1,11 +1,9 @@
 package code.map;
 
 /**
- * To create the model of the map
- * 
+ * To create the model of the map 
  * @author Lokesh
  * @author M.Umer
- *
  */
 
 public class MapModel {
@@ -42,7 +40,6 @@ public class MapModel {
 		this.maparray = new int[row][col];
 	}
 	/**
-	 * 
 	 * @return map name
 	 */
 	
@@ -51,7 +48,6 @@ public class MapModel {
 		return this.mapname;
 	}
 	/**
-	 * 
 	 * @return selected map array
 	 */
 	public int[][] GetMapArray()
@@ -59,7 +55,6 @@ public class MapModel {
 		return this.maparray;
 	}
 /**
- * 
  * @param type for map validation
  * @param Row for map
  * @param Col for map

@@ -29,7 +29,6 @@ import javax.swing.border.EmptyBorder;
  * This is the main view form which is displayed 1st to the user.
  * The user can decide weather to create a new map or open an existing file 
  * for editing.
- * 
  * @author lokesh
  * @author M.Umer
  * @version 1.0.1.0
@@ -48,7 +47,6 @@ public class MyGuiFile extends JFrame {
 	/**
 	 * Main method of the class where the execution begins. The applications is invoked from this main method. It takes command line arguments 
 	 * which for now is not used.
-	 * 
 	 *  @param args command line arguments passed to the application during invocation.
 	 */
 	public static void main(String[] args) {
@@ -67,7 +65,6 @@ public class MyGuiFile extends JFrame {
 	/**
 	 * Method to read an already existing map from file and create a map model object of the read map. The name of the map file and 
 	 * the absolute path to the folder containing the file is passed to the method.
-	 * 
 	 * @param filename name of the map file.
 	 * @param path path to the folder containing the map file.
 	 */

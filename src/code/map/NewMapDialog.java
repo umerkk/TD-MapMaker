@@ -15,7 +15,6 @@ import javax.swing.border.EmptyBorder;
 
 /**
  * This is a map maker class to create the map.
- 
  * @author Armaghan
  * @author Iftikhar
  *
