@@ -23,8 +23,8 @@ public class MapModel {
 	 * Constructor method of the class to create a map model from an already existing file. 
 	 * The map array and the map name needs to be passed to the constructor for the model initialization.
 	 *  
-	 * @param _mapName name of the map (usually the filename)
-	 * @param _mapArray the map array of the model (usually read from the file)
+	 * @param mapName name of the map (usually the filename)
+	 * @param mapArray the map array of the model (usually read from the file)
 	 */
 	public MapModel(String mapName, int[][] mapArray) {
 		this.mapName = mapName;

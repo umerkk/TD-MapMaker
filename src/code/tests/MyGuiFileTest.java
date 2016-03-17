@@ -5,11 +5,17 @@ import org.junit.Test;
 import code.map.MyGuiFile;
 
 /**
+ * Test case class for testing functionality of MyGuiFile
+ * 
  * @author Armaghan
  * @author Lokesh
+ * @version 1.0.0.0
  */
 public class MyGuiFileTest {
 
+	/**
+	 * Test to check whether a map read from file is same as the one previously written to it.
+	 */
 	@Test
 	public void testReadMapFrmFile() {
 		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },

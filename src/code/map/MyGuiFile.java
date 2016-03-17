@@ -119,7 +119,8 @@ public class MyGuiFile extends JFrame {
 	}
 
 	/**
-	 * 
+	 * Method to call the UI window for getting the custom map size from the user.
+	 * The method then creates a new empty map model with the user specified dimensions.
 	 */
 	private void createNewMap() {
 		NewMapDialog mapDialog = new NewMapDialog();
@@ -138,7 +139,8 @@ public class MyGuiFile extends JFrame {
 	}
 
 	/**
-	 * To create the frame.
+	 * Constructor method to initialize the current main window and create the components to be displayed to player in the main window.
+	 * The action listeners for the buttons are also defined inside this constructor. 
 	 */
 	public MyGuiFile() {
 
@@ -162,6 +164,7 @@ public class MyGuiFile extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem);
 
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Open ");
+		// action listener for the open menu item for opening a new file.
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -183,10 +186,11 @@ public class MyGuiFile extends JFrame {
 		JMenu mnHelp = new JMenu("About");
 		menuBar.add(mnHelp);
 
+		// action listener for about menu item 
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mntmAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(rootPane, "This application is used for building a map for the Tower Defence Game.\r\n Built by:\r\nMuhammad Umer\r\nLokesh\r\nIftekhar Ahmed");
+				JOptionPane.showMessageDialog(rootPane, "This application is used for building a map for the Tower Defence Game.\r\n Built by:\r\nMuhammad Umer\r\nLokesh\r\nIftikhar Ahmed\r\nArmaghan Sikandar");
 			}
 		});
 
@@ -209,6 +213,7 @@ public class MyGuiFile extends JFrame {
 		panel.add(m_comboBox);
 
 		JButton btnNewButton = new JButton("Open File");
+		// action listener for open file button to open the file selected in the combo box.
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(m_comboBox.getItemCount() == 1 || m_comboBox.getSelectedItem() == null)

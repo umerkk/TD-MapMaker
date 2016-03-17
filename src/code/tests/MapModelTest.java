@@ -7,15 +7,18 @@ import org.junit.Test;
 
 import code.map.MapModel;
 /**
+ * Test case class to test the functionalities of the MApModel class. 
+ * Most of the test cases here based on the validation of the map
+ * to ensure its correctness.
+ * 
  * @author Lokesh
- * @author Iftikhar
  * @author Armaghan
- *
+ * @version 1.0.0.0
  */
 public class MapModelTest {
 
 	/**
-	 *Tests if the map has a starting point
+	 *Test to check if a map validation with no start point will fail.
 	 */
 	@Test
 	public void testNoStartPoint() {
@@ -28,7 +31,7 @@ public class MapModelTest {
 	}
 
 	/**
-	 * Tests if the map has an end point
+	 * Test to check if a map validation with no end point will fail.
 	 */
 	@Test
 	public void testNoExitPoint() {
@@ -41,7 +44,7 @@ public class MapModelTest {
 	}
 
 	/**
-	 * Tests if the map has a continuous path
+	 * Test to check if a map validation without a continuous path between start and end point will fail.
 	 */
 	@Test
 	public void testPathContinuity() {
@@ -54,7 +57,7 @@ public class MapModelTest {
 	}
 
 	/**
-	 * Tests if the map has an orphan path
+	 * Test to check if a map validation with an orphan path will fail.
 	 */
 	@Test
 	public void testPathOrphan() {
@@ -67,7 +70,7 @@ public class MapModelTest {
 	}
 
 	/**
-	 * Tests if the map has multiple start points
+	 * Test to check if a map validation with 2 or more start points will fail.
 	 */
 	@Test
 	public void testDuplicateStartPoints() {
@@ -80,7 +83,7 @@ public class MapModelTest {
 	}
 
 	/**
-	 * Tests if the map has multiple exit points
+	 * Test to check if a map validation with 2 or more end points will fail.
 	 */
 	@Test
 	public void testDuplicateExitPoints() {
@@ -93,7 +96,7 @@ public class MapModelTest {
 	}
 
 	/**
-	 * Tests if the map has duplicate paths
+	 * Test to check if a map validation with duplicate path between start and end point will pass.
 	 */
 	@Test
 	public void testMultiplePaths() {
@@ -107,7 +110,7 @@ public class MapModelTest {
 	}
 
 	/**
-	 * Tests if the map has only 1 start and end point
+	 * Test to check if a map validation with only start and end point will fail.
 	 */
 	@Test
 	public void testStrtEndMap() {
@@ -121,7 +124,7 @@ public class MapModelTest {
 	}
 
 	/**
-	 * Tests if the map has a branch in the path
+	 * Test to check if a map validation with branches in the path between start and end point will pass.
 	 */
 	@Test
 	public void testPathWthBrnchs() {
@@ -136,7 +139,7 @@ public class MapModelTest {
 	}
 
 	/**
-	 * Tests if the map has a branch in the path
+	 * Test to check if a path object can be successfully added to the map.
 	 */
 	@Test
 	public void testAddPath() {
@@ -157,7 +160,8 @@ public class MapModelTest {
 	}
 
 	/**
-	 * Tests if the map has a branch in the path
+	 * Test to check if a map validation with multiple path between start and end point 
+	 * will generate the shortest path between the start and end point.
 	 */
 	@Test
 	public void testShrtstPath() {
