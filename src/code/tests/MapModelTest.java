@@ -9,191 +9,171 @@ import code.map.MapModel;
 /**
  * @author Lokesh
  * @author Iftikhar
+ * @author Armaghan
  *
  */
 public class MapModelTest {
 
 	/**
-	 * Method to test if the map has a starting point
+	 *Tests if the map has a starting point
 	 */
 	@Test
-	public void testNoStartPoint() 
-	{
+	public void testNoStartPoint() {
 		int[][] mapArray =  new int[][]{ { 0, 0, 0, 0 },
 			{ 0, 2, 3, 0},
 			{ 0, 0, 4, 0},
 			{ 0, 0, 9999, 0}}; 
-			MapModel testmapobj = new MapModel("testmap", mapArray);
-			assertFalse(testmapobj.validateMap());
-
+			MapModel mMapModel = new MapModel("testmap", mapArray);
+			assertFalse(mMapModel.validateMap());
 	}
-	
+
 	/**
-	 * Method to test if the map has an end point
+	 * Tests if the map has an end point
 	 */
 	@Test
-	public void testNoExitPoint() 
-	{
+	public void testNoExitPoint() {
 		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
 			{ 0, 2, 3, 0},
 			{ 0, 0, 4, 0},
 			{ 0, 0, 5, 0}}; 
-			MapModel testmapobj = new MapModel("testmap", mapArray);
-			assertFalse(testmapobj.validateMap());
-
+			MapModel mMapModel = new MapModel("testmap", mapArray);
+			assertFalse(mMapModel.validateMap());
 	}
-	
+
 	/**
-	 * Method to test if the map has a continuous path
+	 * Tests if the map has a continuous path
 	 */
 	@Test
-	public void testPathContinuity() 
-	{
+	public void testPathContinuity() {
 		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
 			{ 0, 2, 3, 0},
 			{ 0, 0, 0, 0},
 			{ 0, 0, 9999, 0}}; 
-			MapModel testmapobj = new MapModel("testmap", mapArray);
-			assertFalse(testmapobj.validateMap());
-
+			MapModel mMapModel = new MapModel("testmap", mapArray);
+			assertFalse(mMapModel.validateMap());
 	}
-	
+
 	/**
-	 * Method to test if the map has an orphan path
+	 * Tests if the map has an orphan path
 	 */
 	@Test
-	public void testPathOrphan() 
-	{
+	public void testPathOrphan() {
 		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
 			{ 0, 2, 3, 0},
 			{ 0, 0, 4, 0},
 			{ 1, 0, 9999, 0}}; 
-			MapModel testmapobj = new MapModel("testmap", mapArray);
-			assertFalse(testmapobj.validateMap());
-
+			MapModel mMapModel = new MapModel("testmap", mapArray);
+			assertFalse(mMapModel.validateMap());
 	}
-	
+
 	/**
 	 * Tests if the map has multiple start points
 	 */
 	@Test
-	public void testDuplicateStartPoints() 
-	{
+	public void testDuplicateStartPoints() {
 		int[][] mapArray =  new int[][]{ { 1, 1, 0, 0 },
 			{ 0, 2, 3, 0},
 			{ 0, 0, 4, 0},
 			{ 0, 0, 9999, 0}}; 
-			MapModel testmapobj = new MapModel("testmap", mapArray);
-			assertFalse(testmapobj.validateMap());
-
+			MapModel mMapModel = new MapModel("testmap", mapArray);
+			assertFalse(mMapModel.validateMap());
 	}
-	
+
 	/**
 	 * Tests if the map has multiple exit points
 	 */
 	@Test
-	public void testDuplicateExitPoints() 
-	{
+	public void testDuplicateExitPoints() {
 		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
 			{ 0, 2, 3, 0},
 			{ 0, 0, 4, 0},
 			{ 0, 0, 9999, 9999}}; 
-			MapModel testmapobj = new MapModel("testmap", mapArray);
-			assertFalse(testmapobj.validateMap());
-
+			MapModel mMapModel = new MapModel("testmap", mapArray);
+			assertFalse(mMapModel.validateMap());
 	}
-	
+
 	/**
 	 * Tests if the map has duplicate paths
 	 */
 	@Test
-	public void testMultiplePaths() 
-	{
+	public void testMultiplePaths() {
 		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
 			{ 0, 2, 3, 0},
 			{ 0, 5, 4, 0},
 			{ 0, 6, 9999, 0}}; 
-		
-		MapModel testmapobj = new MapModel("testmap", mapArray);
-		assertTrue(testmapobj.validateMap());
 
+			MapModel mMapModel = new MapModel("testmap", mapArray);
+			assertTrue(mMapModel.validateMap());
 	}
 
 	/**
 	 * Tests if the map has only 1 start and end point
 	 */
 	@Test
-	public void testStrtEndMap() 
-	{
+	public void testStrtEndMap() {
 		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
 			{ 0, 9999, 0, 0},
 			{ 0, 0, 0, 0},
 			{ 0, 0, 0, 0}}; 
-		
-		MapModel testmapobj = new MapModel("testmap", mapArray);
-		assertFalse(testmapobj.validateMap());
 
+			MapModel mMapModel = new MapModel("testmap", mapArray);
+			assertFalse(mMapModel.validateMap());
 	}
 
 	/**
 	 * Tests if the map has a branch in the path
 	 */
 	@Test
-	public void testPathWthBrnchs() 
-	{
+	public void testPathWthBrnchs() {
 		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
 			{ 0, 2, 3, 0},
 			{ 0, 9999, 0, 0},
 			{ 0, 0, 0, 0}}; 
-		
-		MapModel testmapobj = new MapModel("testmap", mapArray);
-		assertTrue(testmapobj.validateMap());
+
+			MapModel mMapModel = new MapModel("testmap", mapArray);
+			assertTrue(mMapModel.validateMap());
 
 	}
-	
+
 	/**
 	 * Tests if the map has a branch in the path
 	 */
 	@Test
-	public void testAddPath() 
-	{
+	public void testAddPath() {
 		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
 			{ 0, 2, 0, 0},
 			{ 0, 0, 0, 0},
 			{ 0, 9999, 0, 0}}; 
-		
-		MapModel testmapobj = new MapModel("testmap", mapArray);
-		testmapobj.AddToMap(4, 2, 1);
-		
-		mapArray =  new int[][]{ { 0, 1, 0, 0 },
-			{ 0, 2, 0, 0},
-			{ 0, 4, 0, 0},
-			{ 0, 9999, 0, 0}}; 
-			
-		Assert.assertArrayEquals(mapArray, testmapobj.GetMapArray());
 
+			MapModel mMapArray = new MapModel("testmap", mapArray);
+			mMapArray.AddToMap(4, 2, 1);
+
+			mapArray =  new int[][]{ { 0, 1, 0, 0 },
+				{ 0, 2, 0, 0},
+				{ 0, 4, 0, 0},
+				{ 0, 9999, 0, 0}}; 
+
+				Assert.assertArrayEquals(mapArray, mMapArray.GetMapArray());
 	}
-	
+
 	/**
 	 * Tests if the map has a branch in the path
 	 */
 	@Test
-	public void testShrtstPath() 
-	{
+	public void testShrtstPath() {
 		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
 			{ 0, 2, 3, 0},
 			{ 0, 4, 5, 0},
 			{ 0, 9999, 0, 0}}; 
-		
-		MapModel testmapobj = new MapModel("testmap", mapArray);
-		testmapobj.validateMap();
-		
-		mapArray =  new int[][]{ { 0, 1, 0, 0 },
-			{ 0, 2, 99, 0},
-			{ 0, 3, 99, 0},
-			{ 0, 9999, 0, 0}}; 
-			
-		Assert.assertArrayEquals(mapArray, testmapobj.GetMapArray());
 
+			MapModel mMapModel = new MapModel("testmap", mapArray);
+			mMapModel.validateMap();
+
+			mapArray =  new int[][]{ { 0, 1, 0, 0 },
+				{ 0, 2, 99, 0},
+				{ 0, 3, 99, 0},
+				{ 0, 9999, 0, 0}}; 
+
+				Assert.assertArrayEquals(mapArray, mMapModel.GetMapArray());
 	}
 }

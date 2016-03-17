@@ -19,6 +19,7 @@ import javax.swing.border.EmptyBorder;
  * @author Iftikhar
  *
  */
+@SuppressWarnings("serial")
 public class NewMapDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -26,6 +27,7 @@ public class NewMapDialog extends JDialog {
 	public JSpinner col_input = new JSpinner();
 	public JSpinner row_input = new JSpinner();
 	public boolean IsCompleted = false;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -47,64 +49,60 @@ public class NewMapDialog extends JDialog {
 		setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
 
 		setBounds(100, 100, 528, 362);
-		
+
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		{
-			JLabel lblNewLabel = new JLabel("Please specify the size of the Map in terms of Rows & Columns");
-			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-			lblNewLabel.setBounds(15, 16, 476, 53);
-			contentPanel.add(lblNewLabel);
-		}
-		
+
+		JLabel lblNewLabel = new JLabel("Please specify the size of the Map in terms of Rows & Columns");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel.setBounds(15, 16, 476, 53);
+		contentPanel.add(lblNewLabel);
+
 		JLabel lblRow = new JLabel("Row");
 		lblRow.setBounds(15, 112, 69, 20);
 		contentPanel.add(lblRow);
-		
+
 		JLabel lblColumn = new JLabel("Column");
 		lblColumn.setBounds(15, 174, 69, 20);
 		contentPanel.add(lblColumn);
 		row_input.setModel(new SpinnerNumberModel(2, 2, 9, 1));
-		
+
 		row_input.setBounds(120, 109, 83, 26);
 		contentPanel.add(row_input);
 		col_input.setModel(new SpinnerNumberModel(2, 2, 9, 1));
-		
-	
+
+
 		col_input.setBounds(120, 171, 83, 26);
 		contentPanel.add(col_input);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						IsCompleted = true;
-						setVisible(false);
-						dispose();
-					}
-				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+
+		JPanel buttonPane = new JPanel();
+		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		getContentPane().add(buttonPane, BorderLayout.SOUTH);
+		JButton okButton = new JButton("OK");
+		okButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				IsCompleted = true;
+				setVisible(false);
+				dispose();
 			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						IsCompleted = false;
-						setVisible(false);
-						dispose();
-					}
-				});
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
-		}
+		});
 		
+		okButton.setActionCommand("OK");
+		buttonPane.add(okButton);
+		getRootPane().setDefaultButton(okButton);
+		JButton cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				IsCompleted = false;
+				setVisible(false);
+				dispose();
+			}
+		});
+		
+		cancelButton.setActionCommand("Cancel");
+		buttonPane.add(cancelButton);
+
 	}
 }

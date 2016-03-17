@@ -38,6 +38,7 @@ import net.miginfocom.swing.MigLayout;
  * @author Iftikhar
  * @version 1.0.1.0
  */
+@SuppressWarnings("serial")
 public class MapMaker extends JFrame {
 
 	// class attribute declarations
@@ -47,14 +48,14 @@ public class MapMaker extends JFrame {
 	private JPanel[][] panelsHolder; // panel array to hold the cells in the grid
 	private JButton buttonStart = new JButton("Start Point");
 	private JButton buttonEnd = new JButton("End Point");
-	
+
 	private int selectedTool = 0; //specify current selected tool with values as 1=StartPoint, 9999=End, 2=Path
 	private boolean isStartAdded = false;
 	private boolean isEndAdded = false;
 	private int pathTempValue=2; // counter to keep track of the path
-	
-	private final String DEFAULTFILEPATH = System.getProperty("user.dir") + "/maps";
-	
+
+	private static final String DEFAULT_FILE_PATH = System.getProperty("user.dir") + "/maps";
+
 	/**
 	 * Method to save the current map to an already existing file or a new file 
 	 * specified by the map name in the map model object.
@@ -65,73 +66,69 @@ public class MapMaker extends JFrame {
 		try {
 			// validate the map for correctness before saving
 			if(m_currmap.validateMap()) {
-				
-	    	   JFileChooser fileChooser = new JFileChooser();
-	    	   fileChooser.setCurrentDirectory(new File(DEFAULTFILEPATH));
-	    	   fileChooser.setSelectedFile(new File(m_currmap.GetName() + ".map"));
-	    	   if (fileChooser.showSaveDialog(MapMaker.this) == JFileChooser.APPROVE_OPTION) {
-	    		   
-	    		   File file = fileChooser.getSelectedFile();
-	    		   // save to file
-	    		   
-	    		   FileOutputStream fos= new FileOutputStream(file);
-	    		   ObjectOutputStream oos= new ObjectOutputStream(fos); 
-	    		   oos.writeObject(m_currmap.GetMapArray());
-	    		   oos.close();
-	    		   fos.close();
-	    		   JOptionPane.showMessageDialog(null, "Your map is saved successfully.");
-	    	   } 
-	    	}
-	    	else {
-	    		JOptionPane.showMessageDialog(null, "Your map is Invalid, it could be due to \r\n1) No Start Point.\r\n2) No End Point\r\n3) No Path exists or there is an orphan path in your map.\r\n\r\nPlease correct the errors to continue");
-	    		return false;
-	    	}
-	       }catch(IOException ioe){
-	            ioe.printStackTrace();
-	            return false;
-	        }
+
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setCurrentDirectory(new File(DEFAULT_FILE_PATH));
+				fileChooser.setSelectedFile(new File(m_currmap.GetName() + ".map"));
+				if (fileChooser.showSaveDialog(MapMaker.this) == JFileChooser.APPROVE_OPTION) {
+
+					File file = fileChooser.getSelectedFile();
+					// save to file
+
+					FileOutputStream fos= new FileOutputStream(file);
+					ObjectOutputStream oos= new ObjectOutputStream(fos); 
+					oos.writeObject(m_currmap.GetMapArray());
+					oos.close();
+					fos.close();
+					JOptionPane.showMessageDialog(null, "Your map is saved successfully.");
+				} 
+			} else {
+				JOptionPane.showMessageDialog(null, "Your map is Invalid, it could be due to \r\n1) No Start Point.\r\n2) No End Point\r\n3) No Path exists or there is an orphan path in your map.\r\n\r\nPlease correct the errors to continue");
+				return false;
+			}
+		}catch(IOException ioe){
+			ioe.printStackTrace();
+			return false;
+		}
 		return true;
 	}
-	
+
 	/**
 	 * Constructor method of the MapMaker class which creates and initializes the UI and display it to the player. 
-	 * It takes as arguments the mapmodel which either need to be created or is read from an existing file, an argument 
+	 * It takes as arguments the mapModel which either need to be created or is read from an existing file, an argument 
 	 * to specify whether it is a new map or is read from an existing file and reference of the parent frame.
 	 *  
-	 * @param mapmdlobj create map model object
+	 * @param mMapModel create map model object
 	 * @param isExistingFile for valid map
 	 * @param prntfile to save the file
 	 */
-	public MapMaker(MapModel mapmdlobj, boolean isExistingFile, MyGuiFile prntfile) 
-	{
+	public MapMaker(MapModel mMapModel, boolean isExistingFile, MyGuiFile prntfile) {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
 				prntfile.updateTxtPn();
 			}
 		});
-		m_currmap = mapmdlobj;
-		MigLayout myGrid = new MigLayout(); //***************************************************8
 		
-		if(isExistingFile)
-		{
-			for(int k=0;k < m_currmap.rsize;k++)
-			{
-				for(int i=0;i < m_currmap.csize;i++)
-				{
+		m_currmap = mMapModel;
+		MigLayout myGrid = new MigLayout();
+
+		if(isExistingFile) {
+			for(int k=0;k < m_currmap.rSize;k++) {
+				for(int i=0;i < m_currmap.cSize;i++) {
 					if(pathTempValue < m_currmap.GetMapArray()[k][i] && m_currmap.GetMapArray()[k][i] != 9999)
 						pathTempValue = m_currmap.GetMapArray()[k][i];
 				}
 			}
 			pathTempValue++;
 		}
-		
+
 		panel_1.setLayout(myGrid);
 		panel_1.setLayout(new MigLayout());
-		
-		panelsHolder = new JPanel[m_currmap.rsize][m_currmap.csize];
+
+		panelsHolder = new JPanel[m_currmap.rSize][m_currmap.cSize];
 		DrawMap(isExistingFile, panel_1);
-			
+
 		setTitle("Tower Defence - Map Maker");
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 956, 777);
@@ -139,21 +136,19 @@ public class MapMaker extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		Panel panel = new Panel();
 		panel.setBounds(10, 60, 914, 90);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
+
 		JLabel lblOptions = new JLabel("Options");
 		lblOptions.setBounds(0, 0, 55, 20);
 		panel.add(lblOptions);
-		
-		
+
+
 		buttonStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-			
 				if(!isStartAdded){
 					selectedTool = 1;
 				} else {
@@ -161,362 +156,274 @@ public class MapMaker extends JFrame {
 				}
 			}
 		});
+
 		buttonStart.setBounds(69, 38, 115, 29);
 		panel.add(buttonStart);
-		
-		
+
 		buttonEnd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				if(!isEndAdded){
-					selectedTool = 9999;
+					selectedTool = Util.TOOL_POINT_EXIT;
 				} else {
 					selectedTool = -1;
 				}
-				
 			}
 		});
+
 		buttonEnd.setBounds(199, 38, 115, 29);
 		panel.add(buttonEnd);
-		
-		
+
 		JButton buttonPath = new JButton("Path");
 		buttonPath.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				selectedTool = 2;
 			}
 		});
+
 		buttonPath.setBounds(334, 38, 115, 29);
 		panel.add(buttonPath);
-		
+
 		JButton buttonDelete = new JButton("Delete");
 		buttonDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
 				selectedTool = 3;
 				buttonDelete.setSelected(true);
-				
 			}
 		});
+
 		buttonDelete.setBounds(459, 38, 146, 29);
-		
 		panel.add(buttonDelete);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBackground(SystemColor.menu);
 		menuBar.setBounds(0, 0, 139, 31);
 		contentPane.add(menuBar);
-		
+
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
-		
+
 		JMenuItem mntmSave = new JMenuItem("Save");
 		mntmSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-			       saveToFile();
-				
+				saveToFile();
 			}
 		});
 		mnFile.add(mntmSave);
-		
+
 		ScrollPane sc_panel = new ScrollPane();
 		sc_panel.setBounds(10, 172, 914, 527);
-		
+
 		sc_panel.add(panel_1,null);
 		contentPane.add(sc_panel);
-			
-		
-}
+
+	}
+
 	/**
 	 * 
 	 * @param e for mouse event
 	 * @param cell for Jpanel
 	 */
-	
 	public void click(MouseEvent e, JPanel cell) {
-  
-	  boolean overideExisting=false;
-      String tempName = cell.getName();
-      char[] name_exploded = tempName.toCharArray();
-      int x = Integer.parseInt(String.valueOf(name_exploded[0]));
-      int y = Integer.parseInt(String.valueOf(name_exploded[1]));
-    //1=StartPoint, 9999=End, 2=Path, 3=Delete
-      if(selectedTool==3)
-      {
-    	  
-  		
-    	  if(m_currmap.GetMapArray()[x][y] == 1)
-    	  {
-    		  isStartAdded  = false;
-        	  buttonStart.setEnabled(true);
-        	  
-    	  } 
-    	  else if(m_currmap.GetMapArray()[x][y] == 9999)
-    	  {
-    		  isEndAdded  = false;
-        	  buttonEnd.setEnabled(true);
-    	  } 
-    	  else if(m_currmap.GetMapArray()[x][y] > 1)
-    	  {
-    		  pathTempValue--;
-    	  }  
-    	  m_currmap.DeleteFromMap(x, y);
-    	  
-    	  cell.removeAll();
-    	  cell.setBackground(null);
-    	  panel_1.revalidate();
-    	  panel_1.repaint();
-      } else {
-    	  
-    	  if(selectedTool==1){
-    	 DrawMapItem(1, cell);
-    	 
-    	  isStartAdded  = true;
-    	  buttonStart.setEnabled(false);
-    	  
-    	   
-      } else if(selectedTool == 2)
-      {
-    	  if(m_currmap.GetMapArray()[x][y] != 1 && m_currmap.GetMapArray()[x][y] != 9999)
-    	  {
-    		  DrawMapItem(2, cell);
-    		//  mapArray[x][y] = pathTempValue;
-    		//  pathTempValue++;
-        	  
-    	  } else {
-    		  overideExisting=true;
-    	  }
-    	  
-      } else if (selectedTool==9999){
-    	  DrawMapItem(9999, cell);
-    	  isEndAdded = true;
-    	  buttonEnd.setEnabled(false);
-    	 
-    	  
-      }
-    	
-          
-        
-      }
-      if(selectedTool != 3 && !overideExisting)
-    	  {
-    	  if(selectedTool==2)
-    	  {
-    		  m_currmap.AddToMap(pathTempValue, x, y);
-    		  pathTempValue++;
-    	  }
-    	  else
-    		  m_currmap.AddToMap(selectedTool, x, y);
-    	  }
-      
-      if(selectedTool == 1 || selectedTool == 9999)
-    	  selectedTool = -1;
-      
-    }
-	
+
+		boolean overideExisting=false;
+		String tempName = cell.getName();
+		char[] name_exploded = tempName.toCharArray();
+		int x = Integer.parseInt(String.valueOf(name_exploded[0]));
+		int y = Integer.parseInt(String.valueOf(name_exploded[1]));
+		//1=StartPoint, 9999=End, 2=Path, 3=Delete
+		if(selectedTool== Util.TOOL_DELETE) {
+			if(m_currmap.GetMapArray()[x][y] == 1) {
+				isStartAdded  = false;
+				buttonStart.setEnabled(true);
+			} else if(m_currmap.GetMapArray()[x][y] == Util.POINT_EXIT) {
+				isEndAdded  = false;
+				buttonEnd.setEnabled(true);
+			} 
+			else if(m_currmap.GetMapArray()[x][y] > 1) {
+				pathTempValue--;
+			}
+
+			m_currmap.DeleteFromMap(x, y);
+
+			cell.removeAll();
+			cell.setBackground(null);
+			panel_1.revalidate();
+			panel_1.repaint();
+		} else {
+
+			if(selectedTool == Util.TOOL_POINT_ENTRY){
+				DrawMapItem(1, cell);
+
+				isStartAdded  = true;
+				buttonStart.setEnabled(false);
+
+			} else if(selectedTool == Util.TOOL_POINT_PATH) {
+				if(m_currmap.GetMapArray()[x][y] != 1 && m_currmap.GetMapArray()[x][y] != Util.POINT_EXIT) {
+					DrawMapItem(2, cell);
+					//  mapArray[x][y] = pathTempValue;
+					//  pathTempValue++;
+				} else {
+					overideExisting=true;
+				}
+
+			} else if (selectedTool== Util.TOOL_POINT_EXIT){
+				DrawMapItem(Util.POINT_EXIT, cell);
+				isEndAdded = true;
+				buttonEnd.setEnabled(false);
+			}
+		}
+
+		if(selectedTool != 3 && !overideExisting) {
+			if(selectedTool==2) {
+				m_currmap.AddToMap(pathTempValue, x, y);
+				pathTempValue++;
+			} else {
+				m_currmap.AddToMap(selectedTool, x, y);
+			}
+		}
+
+		if(selectedTool == 1 || selectedTool == 9999)
+			selectedTool = -1;
+	}
+
 	/**
 	 * To draw the map
 	 * @param type 
 	 * @param cell
 	 */
-	
-	private void DrawMapItem(int type, JPanel cell)
-	{
-		
-		  JLabel t = new JLabel();
-		  t.setForeground(Color.WHITE);
-		  t.setFont(new Font("Arial",0,20));
-		      
-		      if(type==1)
-		      {
-		    	  t.setText("S");
-		    	  cell.setBackground(Color.blue);
-		    	
-		      } else  if(type==9999)
-		      
-		      {
-		    	  t.setText("X");
-		    	  cell.setBackground(Color.red);
-		    	
-		      } else  if(!(type==0)){
-		    	  t.setText("P");
-		    	  cell.setBackground(Color.green);
-		      }
-		      
-		      
-		      
-		      
-		      t.setBounds(20, 20, 50, 50);
-	          cell.add(t);
+
+	private void DrawMapItem(int type, JPanel cell) {
+
+		JLabel t = new JLabel();
+		t.setForeground(Color.WHITE);
+		t.setFont(new Font("Arial",0,20));
+
+		if(type==1) {
+			t.setText("S");
+			cell.setBackground(Color.blue);
+
+		} else if(type==9999) {
+			t.setText("X");
+			cell.setBackground(Color.red);
+		} else if(!(type==0)){
+			t.setText("P");
+			cell.setBackground(Color.green);
+		}
+
+		t.setBounds(20, 20, 50, 50);
+		cell.add(t);
 	}
-	
-	
+
+
 	/**
 	 * Validate the map
 	 * @param isExisting check the map if it exit or not
 	 * @param parentPanel create validate map into main panel
 	 */
-	
-	private void DrawMap(boolean isExisting, Panel parentPanel)
-	{
-		if(isExisting)
-		{
-		
-			for(int k=0;k < m_currmap.rsize;k++)
-			{
-				for(int i=0;i < m_currmap.csize;i++)
-				{
-				
-					
+
+	private void DrawMap(boolean isExisting, Panel parentPanel) {
+		if(isExisting) {
+			for(int k=0;k < m_currmap.rSize;k++) {
+				for(int i=0;i < m_currmap.cSize;i++) {
+
 					String _append = "";
-					if(i == m_currmap.csize-1)
-					{
+					if(i == m_currmap.cSize-1) {
 						_append = ", wrap";
-					} else
-					{
-						
+					} else {
+
 					}
+
 					JPanel temp = new JPanel();
 					temp.setName(k +""+ i);
 					temp.setBorder(BorderFactory.createEtchedBorder(1));
 					temp.addMouseListener(new MouseListener() {
-						
+
 						@Override
 						public void mouseReleased(MouseEvent e) {
-							// TODO Auto-generated method stub
-							
 						}
-						
+
 						@Override
 						public void mousePressed(MouseEvent e) {
-							// TODO Auto-generated method stub
-							
 						}
-						
+
 						@Override
 						public void mouseExited(MouseEvent e) {
-							// TODO Auto-generated method stub
-							
 						}
-						
+
 						@Override
 						public void mouseEntered(MouseEvent e) {
-							// TODO Auto-generated method stub
-							
 						}
-						
+
 						@Override
 						public void mouseClicked(MouseEvent e) {
 							click(e,temp);
-							
-							
 						}
 					});
-					if(m_currmap.GetMapArray()[k][i] == 1)
-				      {
-				   
-				      
-				    	  DrawMapItem(1, temp);
-				    	  isStartAdded  = true;
-				    	  buttonStart.setEnabled(false);
-				    	 
-				      }  else if(m_currmap.GetMapArray()[k][i] == 9999)
-				      
-				      {
-				    	  DrawMapItem(9999, temp);
-				    	  isEndAdded = true;
-				    	  buttonEnd.setEnabled(false);
-				    
-				      } else if(m_currmap.GetMapArray()[k][i] == 0)
-					      
-				      {
-				    	  DrawMapItem(0, temp);
-				    	 
-				      } else
-				      
-					      
-				      {
-				    	  DrawMapItem(2,temp);
-				    	
-				    	
-				    	
-				      }
-				     
-					
+
+					if(m_currmap.GetMapArray()[k][i] == 1) {
+						DrawMapItem(1, temp);
+						isStartAdded  = true;
+						buttonStart.setEnabled(false);
+
+					}  else if(m_currmap.GetMapArray()[k][i] == 9999) {
+						DrawMapItem(9999, temp);
+						isEndAdded = true;
+						buttonEnd.setEnabled(false);
+
+					} else if(m_currmap.GetMapArray()[k][i] == 0) {
+						DrawMapItem(0, temp);
+					} else {
+						DrawMapItem(2,temp);
+					}
+
 					parentPanel.add(temp, "width 80, height 80" + _append);
-					
 					panelsHolder[k][i] = temp;
-					
 				}
-				      
-				      
-				}
-				
 			}
-			
-			
-			
-		
-		else
-		{
-			for(int k=0;k<m_currmap.rsize;k++)
-			{
-				for(int i=0;i<m_currmap.csize;i++)
-				{
+
+		} else {
+			for(int k=0;k<m_currmap.rSize;k++) {
+				for(int i=0;i<m_currmap.cSize;i++) {
 					String _append = "";
-					if(i==m_currmap.csize-1)
-					{
+					if(i==m_currmap.cSize-1) {
 						_append = ", wrap";
-					} else
-					{
-						
+					} else {
+
 					}
+
 					JPanel temp = new JPanel();
 					temp.setName(k +""+ i);
 					temp.setBorder(BorderFactory.createEtchedBorder(1));
 					temp.addMouseListener(new MouseListener() {
-						
+
 						@Override
 						public void mouseReleased(MouseEvent e) {
-							// TODO Auto-generated method stub
-							
 						}
-						
+
 						@Override
 						public void mousePressed(MouseEvent e) {
-							// TODO Auto-generated method stub
-							
 						}
-						
+
 						@Override
 						public void mouseExited(MouseEvent e) {
-							// TODO Auto-generated method stub
-							
 						}
-						
+
 						@Override
 						public void mouseEntered(MouseEvent e) {
-							// TODO Auto-generated method stub
-							
 						}
-						
+
 						@Override
 						public void mouseClicked(MouseEvent e) {
 							click(e,temp);
-							
-							
 						}
 					});
-					
+
 					parentPanel.add(temp, "width 80, height 80" + _append);
-					
 					panelsHolder[k][i] = temp;
-					
 				}
 			}
 		}
 	}
-	
+
 
 }
