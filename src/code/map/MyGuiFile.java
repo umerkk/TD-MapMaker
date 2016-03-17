@@ -29,6 +29,7 @@ import javax.swing.border.EmptyBorder;
  * This is the main view form which is displayed 1st to the user.
  * The user can decide weather to create a new map or open an existing file 
  * for editing.
+ * 
  * @author lokesh
  * @author M.Umer
  * @version 1.0.1.0
@@ -48,6 +49,7 @@ public class MyGuiFile extends JFrame {
 	/**
 	 * Main method of the class where the execution begins. The applications is invoked from this main method. It takes command line arguments 
 	 * which for now is not used.
+	 * 
 	 *  @param args command line arguments passed to the application during invocation.
 	 */
 	public static void main(String[] args) {
@@ -66,6 +68,7 @@ public class MyGuiFile extends JFrame {
 	/**
 	 * Method to read an already existing map from file and create a map model object of the read map. The name of the map file and 
 	 * the absolute path to the folder containing the file is passed to the method.
+	 * 
 	 * @param filename name of the map file.
 	 * @param path path to the folder containing the map file.
 	 */
@@ -77,6 +80,7 @@ public class MyGuiFile extends JFrame {
 		try {
 			FileInputStream fis = new FileInputStream(file);
 			ObjectInputStream ois = new ObjectInputStream(fis);
+			// map array read from the file
 			maparray = (int[][]) ois.readObject();
 			ois.close();
 			fis.close();
@@ -93,6 +97,9 @@ public class MyGuiFile extends JFrame {
 		}
 	}
 
+	/**
+	 * Method to update the combo box component with the map files in the default directory.  
+	 */
 	public void updateTxtPn() {
 		//m_comboBox
 		m_comboBox.removeAllItems();
@@ -104,6 +111,7 @@ public class MyGuiFile extends JFrame {
 
 			for (File file : listOfFiles) {
 				if (file.isFile() && file.getName().endsWith(".map")) {
+					// file in the default directory
 					m_comboBox.addItem(file.getName());
 				}
 			}
@@ -111,7 +119,7 @@ public class MyGuiFile extends JFrame {
 	}
 
 	/**
-	 * To create the new map dialog
+	 * 
 	 */
 	private void createNewMap() {
 		NewMapDialog mapDialog = new NewMapDialog();

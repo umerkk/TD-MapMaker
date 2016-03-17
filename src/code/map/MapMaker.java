@@ -98,12 +98,13 @@ public class MapMaker extends JFrame {
 	 * It takes as arguments the mapModel which either need to be created or is read from an existing file, an argument 
 	 * to specify whether it is a new map or is read from an existing file and reference of the parent frame.
 	 *  
-	 * @param mMapModel create map model object
-	 * @param isExistingFile for valid map
-	 * @param prntfile to save the file
+	 * @param mMapModel the map model object which is to be created or modified
+	 * @param isExistingFile if the map model already exist 
+	 * @param prntfile the parent form of the current object  
 	 */
 	public MapMaker(MapModel mMapModel, boolean isExistingFile, MyGuiFile prntfile) {
 		
+		// update the parent combo box
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
@@ -148,6 +149,7 @@ public class MapMaker extends JFrame {
 		panel.add(lblOptions);
 
 
+		// start button event handler
 		buttonStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!isStartAdded){
@@ -161,6 +163,7 @@ public class MapMaker extends JFrame {
 		buttonStart.setBounds(69, 38, 115, 29);
 		panel.add(buttonStart);
 
+		// end button event handler
 		buttonEnd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!isEndAdded){
@@ -184,6 +187,7 @@ public class MapMaker extends JFrame {
 		buttonPath.setBounds(334, 38, 115, 29);
 		panel.add(buttonPath);
 
+		// delete button definition and event handler
 		JButton buttonDelete = new JButton("Delete");
 		buttonDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -204,6 +208,7 @@ public class MapMaker extends JFrame {
 		menuBar.add(mnFile);
 
 		JMenuItem mntmSave = new JMenuItem("Save");
+		// save button event handler
 		mntmSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				saveToFile();
@@ -220,9 +225,11 @@ public class MapMaker extends JFrame {
 	}
 
 	/**
+	 * Method to handle the click event generated from the map grid. When user clicks on the map editor grid, the
+	 * call is received in this method and handled based on the selected tool. 
 	 * 
-	 * @param e for mouse event
-	 * @param cell for Jpanel
+	 * @param e the mouse event which triggered the invocation 
+	 * @param cell the cell which on which the event is triggered.
 	 */
 	public void click(MouseEvent e, JPanel cell) {
 
@@ -231,7 +238,9 @@ public class MapMaker extends JFrame {
 		char[] name_exploded = tempName.toCharArray();
 		int x = Integer.parseInt(String.valueOf(name_exploded[0]));
 		int y = Integer.parseInt(String.valueOf(name_exploded[1]));
+		
 		//1=StartPoint, 9999=End, 2=Path, 3=Delete
+		// if the delete tool is selected
 		if(selectedTool== Util.TOOL_DELETE) {
 			if(m_currMap.GetMapArray()[x][y] == 1) {
 				isStartAdded  = false;
@@ -252,6 +261,7 @@ public class MapMaker extends JFrame {
 			panel_1.repaint();
 		} else {
 
+			// if the other tool is selected, it is handled here
 			if(selectedTool == Util.TOOL_POINT_ENTRY){
 				DrawMapItem(1, cell);
 
@@ -274,6 +284,7 @@ public class MapMaker extends JFrame {
 			}
 		}
 
+		// modifying the map model object based tool action performed above
 		if(selectedTool != 3 && !overideExisting) {
 			if(selectedTool==2) {
 				m_currMap.AddToMap(pathTempValue, x, y);
@@ -288,11 +299,12 @@ public class MapMaker extends JFrame {
 	}
 
 	/**
-	 * To draw the map
-	 * @param type 
-	 * @param cell
+	 * Method to draw the selected map object on the cell. The method draws 
+	 * the start point, path or end point depending on the type passed to the method. 
+	 * 
+	 * @param type type of the map object to be drawn 
+	 * @param cell cell on which the object needs to be drawn
 	 */
-
 	private void DrawMapItem(int type, JPanel cell) {
 
 		JLabel t = new JLabel();
@@ -317,11 +329,11 @@ public class MapMaker extends JFrame {
 
 
 	/**
-	 * Validate the map
-	 * @param isExisting check the map if it exit or not
-	 * @param parentPanel create validate map into main panel
+	 * Method to draw the map grid on UI depending on whether the current map model is already existing or not on the parent panel. 
+	 *
+	 * @param isExisting whether the map model is existing 
+	 * @param parentPanel parent panel on which the map is to be drawn
 	 */
-
 	private void DrawMap(boolean isExisting, Panel parentPanel) {
 		if(isExisting) {
 			for(int k=0;k < m_currMap.rSize;k++) {
@@ -337,6 +349,7 @@ public class MapMaker extends JFrame {
 					JPanel temp = new JPanel();
 					temp.setName(k +""+ i);
 					temp.setBorder(BorderFactory.createEtchedBorder(1));
+					// adding action listener for the panel on which the cell is drawn
 					temp.addMouseListener(new MouseListener() {
 
 						@Override
@@ -361,6 +374,7 @@ public class MapMaker extends JFrame {
 						}
 					});
 
+					// drawing the current map model on the grid
 					if(m_currMap.GetMapArray()[k][i] == 1) {
 						DrawMapItem(1, temp);
 						isStartAdded  = true;
@@ -395,6 +409,7 @@ public class MapMaker extends JFrame {
 					JPanel temp = new JPanel();
 					temp.setName(k +""+ i);
 					temp.setBorder(BorderFactory.createEtchedBorder(1));
+					// adding action listener for the panel on which the cell is drawn
 					temp.addMouseListener(new MouseListener() {
 
 						@Override

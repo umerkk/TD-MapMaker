@@ -14,22 +14,26 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 
 /**
- * This is a map maker class to create the map.
+ * NewMapDialog class is used for defining the grid dimensions of the new map which is to be created. 
+ * It allows the user to specify the row and column dimension of the map between 4 and 9.
+ * 
  * @author Armaghan
  * @author Iftikhar
- *
+ * @version 1.0.1.0
  */
 @SuppressWarnings("serial")
 public class NewMapDialog extends JDialog {
 
-	private final JPanel contentPanel = new JPanel();
-
+	// attributes of the class goes here 
+	private JPanel contentPanel = new JPanel();
 	public JSpinner col_input = new JSpinner();
 	public JSpinner row_input = new JSpinner();
 	public boolean isCompleted = false;
 	
 	/**
-	 * Launch the application.
+	 * Main method of the class which instantiates the object and display the window to the player.
+	 * 
+	 * @param args command line arguments if any passed while invoking the class.
 	 */
 	public static void main(String[] args) {
 		try {
@@ -42,7 +46,10 @@ public class NewMapDialog extends JDialog {
 	}
 
 	/**
-	 * Create the dialog.
+	 * Constructor method of the class which initializes the components of the UI
+	 * and creates the window which is displayed to the user. The constructor method 
+	 * also defines action listeners for the events.
+	 * 
 	 */
 	public NewMapDialog() {
 		super((java.awt.Frame) null, true);		
@@ -82,6 +89,7 @@ public class NewMapDialog extends JDialog {
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 		JButton okButton = new JButton("OK");
 		
+		// action listener for the OK button
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isCompleted = true;
@@ -94,6 +102,7 @@ public class NewMapDialog extends JDialog {
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
 		JButton cancelButton = new JButton("Cancel");
+		// action listener for the cancel button
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isCompleted = false;
