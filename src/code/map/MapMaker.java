@@ -30,66 +30,62 @@ import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 
 /**
- * This is a map maker class to create the map.
- 
+ * MapMaker class is used to create the map design after the player select the grid dimension 
+ * or edit an already existing map. It creates or takes an already existing MapModel object
+ * and maps the modifications in the UI to the actual map model.   
+ *
  * @author Armaghan
  * @author Iftikhar
- *
+ * @version 1.0.1.0
  */
 public class MapMaker extends JFrame {
 
-	private JPanel contentPane;
-	private MapModel m_currmap;
+	// class attribute declarations
+	private JPanel contentPane; // main container panel
+	private MapModel m_currmap; // MapModel class to hold the map object
+	private Panel panel_1 = new Panel(); // panel to hold the map grid
+	private JPanel[][] panelsHolder; // panel array to hold the cells in the grid
+	private JButton buttonStart = new JButton("Start Point");
+	private JButton buttonEnd = new JButton("End Point");
 	
-	ScrollPane sc_panel = new ScrollPane();
-	Panel panel_1 = new Panel();
+	private int selectedTool = 0; //specify current selected tool with values as 1=StartPoint, 9999=End, 2=Path
+	private boolean isStartAdded = false;
+	private boolean isEndAdded = false;
+	private int pathTempValue=2; // counter to keep track of the path
 	
-	int selectedTool = 0; //1=StartPoint, 9999=End, 2=Path
-	int pathCount=2;
-	boolean isStartAdded = false;
-	boolean isEndAdded = false;
-	
-	int pathTempValue=2;
-	
-	JPanel[][] panelsHolder;
-	
-	
-	JButton buttonStart = new JButton("Start Point");
-	JButton buttonPath = new JButton("Path");
-	JButton buttonEnd = new JButton("End Point");
-	private final JButton buttonDelete = new JButton("Delete");
 	private final String DEFAULTFILEPATH = System.getProperty("user.dir") + "/maps";
 	
 	/**
-	 * Launch the application and save the file.
-	 * @return boolean
+	 * Method to save the current map to an already existing file or a new file 
+	 * specified by the map name in the map model object.
+	 * 
+	 * @return returns if the file has been saved successfully
 	 */
-
-	public boolean saveToFile()
-	{
-		try{
-	    	   if(m_currmap.validateMap())
-	    	   {
+	public boolean saveToFile()	{
+		try {
+			// validate the map for correctness before saving
+			if(m_currmap.validateMap()) {
+				
 	    	   JFileChooser fileChooser = new JFileChooser();
 	    	   fileChooser.setCurrentDirectory(new File(DEFAULTFILEPATH));
 	    	   fileChooser.setSelectedFile(new File(m_currmap.GetName() + ".map"));
 	    	   if (fileChooser.showSaveDialog(MapMaker.this) == JFileChooser.APPROVE_OPTION) {
-	    	     File file = fileChooser.getSelectedFile();
-	    	     // save to file
-	    	  
-	    	   
-	         FileOutputStream fos= new FileOutputStream(file);
-	         ObjectOutputStream oos= new ObjectOutputStream(fos);
-	         oos.writeObject(m_currmap.GetMapArray());
-	         oos.close();
-	         fos.close();
-	         JOptionPane.showMessageDialog(null, "Your map is saved successfully.");
+	    		   
+	    		   File file = fileChooser.getSelectedFile();
+	    		   // save to file
+	    		   
+	    		   FileOutputStream fos= new FileOutputStream(file);
+	    		   ObjectOutputStream oos= new ObjectOutputStream(fos); 
+	    		   oos.writeObject(m_currmap.GetMapArray());
+	    		   oos.close();
+	    		   fos.close();
+	    		   JOptionPane.showMessageDialog(null, "Your map is saved successfully.");
 	    	   } 
-	    	   }
-	    	   else {
-	    		   JOptionPane.showMessageDialog(null, "Your map is Invalid, it could be due to \r\n1) No Start Point.\r\n2) No End Point\r\n3) No Path exists or there is an orphan path in your map.\r\n\r\nPlease correct the errors to continue");
-	    		   return false;
-	    	   }
+	    	}
+	    	else {
+	    		JOptionPane.showMessageDialog(null, "Your map is Invalid, it could be due to \r\n1) No Start Point.\r\n2) No End Point\r\n3) No Path exists or there is an orphan path in your map.\r\n\r\nPlease correct the errors to continue");
+	    		return false;
+	    	}
 	       }catch(IOException ioe){
 	            ioe.printStackTrace();
 	            return false;
@@ -98,7 +94,10 @@ public class MapMaker extends JFrame {
 	}
 	
 	/**
-	 * To create the frame
+	 * Constructor method of the MapMaker class which creates and initializes the UI and display it to the player. 
+	 * It takes as arguments the mapmodel which either need to be created or is read from an existing file, an argument 
+	 * to specify whether it is a new map or is read from an existing file and reference of the parent frame.
+	 *  
 	 * @param mapmdlobj create map model object
 	 * @param isExistingFile for valid map
 	 * @param prntfile to save the file
@@ -181,6 +180,7 @@ public class MapMaker extends JFrame {
 		panel.add(buttonEnd);
 		
 		
+		JButton buttonPath = new JButton("Path");
 		buttonPath.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				selectedTool = 2;
@@ -188,6 +188,8 @@ public class MapMaker extends JFrame {
 		});
 		buttonPath.setBounds(334, 38, 115, 29);
 		panel.add(buttonPath);
+		
+		JButton buttonDelete = new JButton("Delete");
 		buttonDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -218,6 +220,7 @@ public class MapMaker extends JFrame {
 		});
 		mnFile.add(mntmSave);
 		
+		ScrollPane sc_panel = new ScrollPane();
 		sc_panel.setBounds(10, 172, 914, 527);
 		
 		sc_panel.add(panel_1,null);
