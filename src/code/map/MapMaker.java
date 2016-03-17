@@ -28,9 +28,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
+
 /**
  * This is a map maker class to create the map.
- * @author M.Umer
+ 
+ * @author Armaghan
  * @author Iftikhar
  *
  */

@@ -13,6 +13,13 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * This is a map maker class to create the map.
+ 
+ * @author Armaghan
+ * @author Iftikhar
+ *
+ */
 public class NewMapDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
