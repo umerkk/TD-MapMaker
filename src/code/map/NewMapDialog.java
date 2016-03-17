@@ -26,7 +26,7 @@ public class NewMapDialog extends JDialog {
 
 	public JSpinner col_input = new JSpinner();
 	public JSpinner row_input = new JSpinner();
-	public boolean IsCompleted = false;
+	public boolean isCompleted = false;
 	
 	/**
 	 * Launch the application.
@@ -48,16 +48,16 @@ public class NewMapDialog extends JDialog {
 		super((java.awt.Frame) null, true);		
 		setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
 
-		setBounds(100, 100, 528, 362);
+		setBounds(100, 100, 628, 362);
 
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Please specify the size of the Map in terms of Rows & Columns");
+		JLabel lblNewLabel = new JLabel("Please specify the size of the Map in terms of Rows & Columns [MAX : 9]");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel.setBounds(15, 16, 476, 53);
+		lblNewLabel.setBounds(15, 16, 576, 70);
 		contentPanel.add(lblNewLabel);
 
 		JLabel lblRow = new JLabel("Row");
@@ -67,11 +67,11 @@ public class NewMapDialog extends JDialog {
 		JLabel lblColumn = new JLabel("Column");
 		lblColumn.setBounds(15, 174, 69, 20);
 		contentPanel.add(lblColumn);
-		row_input.setModel(new SpinnerNumberModel(2, 2, 9, 1));
+		row_input.setModel(new SpinnerNumberModel(4, 4, 9, 1));
 
 		row_input.setBounds(120, 109, 83, 26);
 		contentPanel.add(row_input);
-		col_input.setModel(new SpinnerNumberModel(2, 2, 9, 1));
+		col_input.setModel(new SpinnerNumberModel(4, 4, 9, 1));
 
 
 		col_input.setBounds(120, 171, 83, 26);
@@ -81,9 +81,10 @@ public class NewMapDialog extends JDialog {
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 		JButton okButton = new JButton("OK");
+		
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				IsCompleted = true;
+				isCompleted = true;
 				setVisible(false);
 				dispose();
 			}
@@ -95,7 +96,7 @@ public class NewMapDialog extends JDialog {
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				IsCompleted = false;
+				isCompleted = false;
 				setVisible(false);
 				dispose();
 			}

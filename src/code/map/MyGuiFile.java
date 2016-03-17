@@ -38,8 +38,8 @@ import javax.swing.border.EmptyBorder;
 public class MyGuiFile extends JFrame {
 
 	// class variable declarations
-	private JPanel m_contentpane;
-	private JComboBox<String> m_combobox;
+	private JPanel m_contentPane;
+	private JComboBox<String> m_comboBox;
 	private final String DEFAULTFILEPATH = System.getProperty("user.dir") + "/maps";
 	private MapModel m_mapObj;
 
@@ -95,8 +95,8 @@ public class MyGuiFile extends JFrame {
 
 	public void updateTxtPn() {
 		//m_comboBox
-		m_combobox.removeAllItems();
-		m_combobox.addItem("                              ");
+		m_comboBox.removeAllItems();
+		m_comboBox.addItem("                              ");
 
 		try{
 			File folder = new File(DEFAULTFILEPATH);
@@ -104,7 +104,7 @@ public class MyGuiFile extends JFrame {
 
 			for (File file : listOfFiles) {
 				if (file.isFile() && file.getName().endsWith(".map")) {
-					m_combobox.addItem(file.getName());
+					m_comboBox.addItem(file.getName());
 				}
 			}
 		}catch(Exception ex){}
@@ -114,16 +114,18 @@ public class MyGuiFile extends JFrame {
 	 * To create the new map dialog
 	 */
 	private void createNewMap() {
-		NewMapDialog mapDlg = new NewMapDialog();
-		mapDlg.setVisible(true);
+		NewMapDialog mapDialog = new NewMapDialog();
+		mapDialog.setVisible(true);
 
-		int rownum = (int) mapDlg.row_input.getValue();
-		int colnum = (int) mapDlg.col_input.getValue();
+		int rowNum = (int) mapDialog.row_input.getValue();
+		int colNum = (int) mapDialog.col_input.getValue();
 
-		if(mapDlg.IsCompleted) {
-			m_mapObj = new MapModel(rownum, colnum);
+		if(rowNum>9 || colNum>9){
+			JOptionPane.showMessageDialog(rootPane, "Map's height of width cannot exceed 9 block. Please try again.");
+		}else if(mapDialog.isCompleted) {
+			m_mapObj = new MapModel(rowNum, colNum);
 			new MapMaker(m_mapObj, false, this).setVisible(true);
-		}	
+		}
 
 	}
 
@@ -179,34 +181,34 @@ public class MyGuiFile extends JFrame {
 				JOptionPane.showMessageDialog(rootPane, "This application is used for building a map for the Tower Defence Game.\r\n Built by:\r\nMuhammad Umer\r\nLokesh\r\nIftekhar Ahmed");
 			}
 		});
-		
+
 		mnHelp.add(mntmAbout);
-		m_contentpane = new JPanel();
-		m_contentpane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(m_contentpane);
-		m_contentpane.setLayout(new BorderLayout(0, 0));
+		m_contentPane = new JPanel();
+		m_contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(m_contentPane);
+		m_contentPane.setLayout(new BorderLayout(0, 0));
 
 		JLabel lblNewLabel = new JLabel("Please select a file from below or an option from the file menu.");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		m_contentpane.add(lblNewLabel, BorderLayout.NORTH);
+		m_contentPane.add(lblNewLabel, BorderLayout.NORTH);
 
 		JPanel panel = new JPanel();
-		m_contentpane.add(panel, BorderLayout.CENTER);
+		m_contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-		m_combobox = new JComboBox<String>();
-		m_combobox.setModel(new DefaultComboBoxModel<String>(new String[] {"                              "}));
-		panel.add(m_combobox);
+		m_comboBox = new JComboBox<String>();
+		m_comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"                              "}));
+		panel.add(m_comboBox);
 
 		JButton btnNewButton = new JButton("Open File");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(m_combobox.getItemCount() == 1 || m_combobox.getSelectedItem() == null)
+				if(m_comboBox.getItemCount() == 1 || m_comboBox.getSelectedItem() == null)
 					return;
-				if(((String)m_combobox.getSelectedItem()).trim().length() == 0)
+				if(((String)m_comboBox.getSelectedItem()).trim().length() == 0)
 					return;
 
-				readMapFrmFile((String)m_combobox.getSelectedItem(), DEFAULTFILEPATH);
+				readMapFrmFile((String)m_comboBox.getSelectedItem(), DEFAULTFILEPATH);
 				new MapMaker(m_mapObj ,true, MyGuiFile.this).setVisible(true);
 			}
 		});
