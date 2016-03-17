@@ -2,6 +2,7 @@ package code.tests;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import code.map.MapModel;
@@ -118,5 +119,81 @@ public class MapModelTest {
 
 	}
 
+	/**
+	 * Tests if the map has only 1 start and end point
+	 */
+	@Test
+	public void testStrtEndMap() 
+	{
+		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
+			{ 0, 9999, 0, 0},
+			{ 0, 0, 0, 0},
+			{ 0, 0, 0, 0}}; 
+		
+		MapModel testmapobj = new MapModel("testmap", mapArray);
+		assertFalse(testmapobj.validateMap());
 
+	}
+
+	/**
+	 * Tests if the map has a branch in the path
+	 */
+	@Test
+	public void testPathWthBrnchs() 
+	{
+		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
+			{ 0, 2, 3, 0},
+			{ 0, 9999, 0, 0},
+			{ 0, 0, 0, 0}}; 
+		
+		MapModel testmapobj = new MapModel("testmap", mapArray);
+		assertTrue(testmapobj.validateMap());
+
+	}
+	
+	/**
+	 * Tests if the map has a branch in the path
+	 */
+	@Test
+	public void testAddPath() 
+	{
+		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
+			{ 0, 2, 0, 0},
+			{ 0, 0, 0, 0},
+			{ 0, 9999, 0, 0}}; 
+		
+		MapModel testmapobj = new MapModel("testmap", mapArray);
+		testmapobj.AddToMap(4, 2, 1);
+		
+		mapArray =  new int[][]{ { 0, 1, 0, 0 },
+			{ 0, 2, 0, 0},
+			{ 0, 4, 0, 0},
+			{ 0, 9999, 0, 0}}; 
+			
+		Assert.assertArrayEquals(mapArray, testmapobj.GetMapArray());
+
+	}
+	
+	/**
+	 * Tests if the map has a branch in the path
+	 */
+	@Test
+	public void testShrtstPath() 
+	{
+		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
+			{ 0, 2, 3, 0},
+			{ 0, 4, 5, 0},
+			{ 0, 9999, 0, 0}}; 
+		
+		MapModel testmapobj = new MapModel("testmap", mapArray);
+		testmapobj.validateMap();
+		
+		mapArray =  new int[][]{ { 0, 1, 0, 0 },
+			{ 0, 2, 99, 0},
+			{ 0, 3, 99, 0},
+			{ 0, 9999, 0, 0}}; 
+			
+		Assert.assertArrayEquals(mapArray, testmapobj.GetMapArray());
+
+	}
 }

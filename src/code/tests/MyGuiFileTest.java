@@ -19,7 +19,7 @@ public class MyGuiFileTest {
 			{ 0, 0, 9999, 0}}; 
 			
 		MyGuiFile tstframe = new MyGuiFile();
-		tstframe.readMapFrmFile("ss.map", System.getProperty("user.dir"));
+		tstframe.readMapFrmFile("testmap.map", System.getProperty("user.dir") + "/maps");
 		Assert.assertArrayEquals(maptstarray, tstframe.getMapModelObj().GetMapArray());
 	
 	}

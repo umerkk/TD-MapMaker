@@ -24,7 +24,7 @@ public class MapModel {
 		this.mapname = mapn;
 		rsize = _maparray.length;
 		csize = _maparray[0].length;
-		this.maparray = _maparray;
+		this.maparray = _maparray.clone();
 	}
 
 	/**
