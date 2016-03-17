@@ -26,8 +26,8 @@ public class NewMapDialog extends JDialog {
 
 	// attributes of the class goes here 
 	private JPanel contentPanel = new JPanel();
-	public JSpinner col_input = new JSpinner();
-	public JSpinner row_input = new JSpinner();
+	public JSpinner colInput = new JSpinner();
+	public JSpinner rowInput = new JSpinner();
 	public boolean isCompleted = false;
 	
 	/**
@@ -74,15 +74,15 @@ public class NewMapDialog extends JDialog {
 		JLabel lblColumn = new JLabel("Column");
 		lblColumn.setBounds(15, 174, 69, 20);
 		contentPanel.add(lblColumn);
-		row_input.setModel(new SpinnerNumberModel(4, 4, 9, 1));
+		rowInput.setModel(new SpinnerNumberModel(4, 4, 9, 1));
 
-		row_input.setBounds(120, 109, 83, 26);
-		contentPanel.add(row_input);
-		col_input.setModel(new SpinnerNumberModel(4, 4, 9, 1));
+		rowInput.setBounds(120, 109, 83, 26);
+		contentPanel.add(rowInput);
+		colInput.setModel(new SpinnerNumberModel(4, 4, 9, 1));
 
 
-		col_input.setBounds(120, 171, 83, 26);
-		contentPanel.add(col_input);
+		colInput.setBounds(120, 171, 83, 26);
+		contentPanel.add(colInput);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));

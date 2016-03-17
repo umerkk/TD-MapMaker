@@ -39,12 +39,12 @@ import javax.swing.border.EmptyBorder;
 public class MyGuiFile extends JFrame {
 
 	// class variable declarations
-	private JPanel m_contentPane;
-	private JComboBox<String> m_comboBox;
-	private final String DEFAULTFILEPATH = System.getProperty("user.dir") + "/maps";
-	private MapModel m_mapObj;
+	private JPanel contentPane;
+	private JComboBox<String> comboBox;
+	private final String DEFAULT_FILE_PATH = System.getProperty("user.dir") + "/maps";
+	private MapModel mapObj;
 
-	public MapModel getMapModelObj() {return m_mapObj;}
+	public MapModel getMapModelObj() {return mapObj;}
 
 	/**
 	 * Main method of the class where the execution begins. The applications is invoked from this main method. It takes command line arguments 
@@ -85,7 +85,7 @@ public class MyGuiFile extends JFrame {
 			ois.close();
 			fis.close();
 
-			m_mapObj = new MapModel(filename.substring(0, filename.length() - 4), maparray);
+			mapObj = new MapModel(filename.substring(0, filename.length() - 4), maparray);
 
 		}catch(IOException ioe){
 			ioe.printStackTrace();
@@ -102,17 +102,17 @@ public class MyGuiFile extends JFrame {
 	 */
 	public void updateTxtPn() {
 		//m_comboBox
-		m_comboBox.removeAllItems();
-		m_comboBox.addItem("                              ");
+		comboBox.removeAllItems();
+		comboBox.addItem("                              ");
 
 		try{
-			File folder = new File(DEFAULTFILEPATH);
+			File folder = new File(DEFAULT_FILE_PATH);
 			File[] listOfFiles = folder.listFiles();
 
 			for (File file : listOfFiles) {
 				if (file.isFile() && file.getName().endsWith(".map")) {
 					// file in the default directory
-					m_comboBox.addItem(file.getName());
+					comboBox.addItem(file.getName());
 				}
 			}
 		}catch(Exception ex){}
@@ -126,14 +126,14 @@ public class MyGuiFile extends JFrame {
 		NewMapDialog mapDialog = new NewMapDialog();
 		mapDialog.setVisible(true);
 
-		int rowNum = (int) mapDialog.row_input.getValue();
-		int colNum = (int) mapDialog.col_input.getValue();
+		int rowNum = (int) mapDialog.rowInput.getValue();
+		int colNum = (int) mapDialog.colInput.getValue();
 
 		if(rowNum>9 || colNum>9){
 			JOptionPane.showMessageDialog(rootPane, "Map's height of width cannot exceed 9 block. Please try again.");
 		}else if(mapDialog.isCompleted) {
-			m_mapObj = new MapModel(rowNum, colNum);
-			new MapMaker(m_mapObj, false, this).setVisible(true);
+			mapObj = new MapModel(rowNum, colNum);
+			new MapMaker(mapObj, false, this).setVisible(true);
 		}
 
 	}
@@ -169,12 +169,12 @@ public class MyGuiFile extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setCurrentDirectory(new File(DEFAULTFILEPATH));
+				fileChooser.setCurrentDirectory(new File(DEFAULT_FILE_PATH));
 				if (fileChooser.showOpenDialog(MyGuiFile.this) == JFileChooser.APPROVE_OPTION) {
 					File file = fileChooser.getSelectedFile();
 
 					readMapFrmFile(file.getName(), file.getParent());
-					new MapMaker(m_mapObj ,true, MyGuiFile.this).setVisible(true);
+					new MapMaker(mapObj ,true, MyGuiFile.this).setVisible(true);
 				}
 			}
 		});
@@ -195,34 +195,34 @@ public class MyGuiFile extends JFrame {
 		});
 
 		mnHelp.add(mntmAbout);
-		m_contentPane = new JPanel();
-		m_contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(m_contentPane);
-		m_contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
 
 		JLabel lblNewLabel = new JLabel("Please select a file from below or an option from the file menu.");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		m_contentPane.add(lblNewLabel, BorderLayout.NORTH);
+		contentPane.add(lblNewLabel, BorderLayout.NORTH);
 
 		JPanel panel = new JPanel();
-		m_contentPane.add(panel, BorderLayout.CENTER);
+		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-		m_comboBox = new JComboBox<String>();
-		m_comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"                              "}));
-		panel.add(m_comboBox);
+		comboBox = new JComboBox<String>();
+		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"                              "}));
+		panel.add(comboBox);
 
 		JButton btnNewButton = new JButton("Open File");
 		// action listener for open file button to open the file selected in the combo box.
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(m_comboBox.getItemCount() == 1 || m_comboBox.getSelectedItem() == null)
+				if(comboBox.getItemCount() == 1 || comboBox.getSelectedItem() == null)
 					return;
-				if(((String)m_comboBox.getSelectedItem()).trim().length() == 0)
+				if(((String)comboBox.getSelectedItem()).trim().length() == 0)
 					return;
 
-				readMapFrmFile((String)m_comboBox.getSelectedItem(), DEFAULTFILEPATH);
-				new MapMaker(m_mapObj ,true, MyGuiFile.this).setVisible(true);
+				readMapFrmFile((String)comboBox.getSelectedItem(), DEFAULT_FILE_PATH);
+				new MapMaker(mapObj ,true, MyGuiFile.this).setVisible(true);
 			}
 		});
 		panel.add(btnNewButton);
