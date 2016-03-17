@@ -5,7 +5,11 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import code.map.MapModel;
-
+/**
+ * @author Lokesh
+ * @author Iftikhar
+ *
+ */
 public class MapModelTest {
 
 	/**

@@ -29,10 +29,9 @@ import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
 /**
- * 
- * @author Umer
+ * This is a map maker class to create the map.
+ * @author M.Umer
  * @author Iftikhar
- * 
  *
  */
 public class MapMaker extends JFrame {
@@ -60,7 +59,8 @@ public class MapMaker extends JFrame {
 	private final String DEFAULTFILEPATH = System.getProperty("user.dir") + "/maps";
 	
 	/**
-	 * Launch the application.
+	 * Launch the application and save the file.
+	 * @return boolean
 	 */
 
 	public boolean saveToFile()
@@ -96,7 +96,10 @@ public class MapMaker extends JFrame {
 	}
 	
 	/**
-	 * Create the frame.
+	 * To create the frame
+	 * @param mapmdlobj create map model object
+	 * @param isExistingFile for valid map
+	 * @param prntfile to save the file
 	 */
 	public MapMaker(MapModel mapmdlobj, boolean isExistingFile, MyGuiFile prntfile) 
 	{
@@ -220,6 +223,11 @@ public class MapMaker extends JFrame {
 			
 		
 }
+	/**
+	 * 
+	 * @param e for mouse event
+	 * @param cell for Jpanel
+	 */
 	
 	public void click(MouseEvent e, JPanel cell) {
   
@@ -302,6 +310,12 @@ public class MapMaker extends JFrame {
       
     }
 	
+	/**
+	 * To draw the map
+	 * @param type 
+	 * @param cell
+	 */
+	
 	private void DrawMapItem(int type, JPanel cell)
 	{
 		
@@ -333,6 +347,11 @@ public class MapMaker extends JFrame {
 	}
 	
 	
+	/**
+	 * Validate the map
+	 * @param isExisting check the map if it exit or not
+	 * @param parentPanel create validate map into main panel
+	 */
 	
 	private void DrawMap(boolean isExisting, Panel parentPanel)
 	{

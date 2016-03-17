@@ -1,12 +1,24 @@
 package code.map;
 
+/**
+ * To create the model of the map
+ * @author Lokesh
+ * @author M.Umer
+ *
+ */
+
 public class MapModel {
 
 	private String mapname;
 	private int[][] maparray;
 	public int rsize, csize;
 	
-	//Constructor
+	/**
+	 * To create the constructor for map model
+	 * @param mapn map name
+	 * @param _maparray length for map
+	 */
+	
 	public MapModel(String mapn, int[][] _maparray)
 	{
 		this.mapname = mapn;
@@ -15,6 +27,12 @@ public class MapModel {
 		this.maparray = _maparray;
 	}
 
+	/**
+	 * To create the size for map
+	 * @param row select the row for map
+	 * @param col select the column for map
+	 */
+	
 	public MapModel(int row, int col)
 	{
 		this.mapname = this.toString().substring(9);
@@ -22,17 +40,30 @@ public class MapModel {
 		csize = col;
 		this.maparray = new int[row][col];
 	}
-
+	/**
+	 * 
+	 * @return map name
+	 */
+	
 	public String GetName()
 	{
 		return this.mapname;
 	}
-
+	/**
+	 * 
+	 * @return selected map array
+	 */
 	public int[][] GetMapArray()
 	{
 		return this.maparray;
 	}
-
+/**
+ * 
+ * @param type for map validation
+ * @param Row for map
+ * @param Col for map
+ * @return boolean
+ */
 	public Boolean AddToMap(int type, int Row, int Col)
 	{
 		if(Row > maparray.length || Col > maparray[0].length)
@@ -51,6 +82,13 @@ public class MapModel {
 
 	}
 	
+	/**
+	 * Delete the row and column from the created map
+	 * @param Row delete from map
+	 * @param Col delete from map
+	 * @return boolean
+	 */
+	
 	public Boolean DeleteFromMap(int Row, int Col)
 	{
 		if(Row > maparray.length || Col > maparray[0].length)
@@ -65,6 +103,11 @@ public class MapModel {
 		
 	}
 
+	/**
+	 * To check the map validation
+	 * @return boolean
+	 */
+	
 	public boolean validateMap()
 	{
 		

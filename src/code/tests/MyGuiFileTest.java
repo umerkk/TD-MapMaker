@@ -4,6 +4,10 @@ import org.junit.Test;
 
 import code.map.MyGuiFile;
 
+/**
+ * @author Armaghan
+ * @author Lokesh
+ */
 public class MyGuiFileTest {
 
 	@Test

@@ -26,11 +26,12 @@ import javax.swing.JSeparator;
 import javax.swing.border.EmptyBorder;
 
 /**
- * This is the main view form which is displayed 1st to the user. The user can decide weather to create a new map or open an existing file 
+ * This is the main view form which is displayed 1st to the user.
+ * The user can decide weather to create a new map or open an existing file 
  * for editing.
  * 
  * @author lokesh
- * @author Armaghan
+ * @author M.Umer
  * @version 1.0.1.0
  * 
  */
@@ -116,7 +117,9 @@ public class MyGuiFile extends JFrame {
 		}catch(Exception ex){}
 	}
 	
-	
+	/**
+	 * To create the new map dialog
+	 */
 	private void CreateNewMap()
 	{
 		NewMapDialog mapDlg = new NewMapDialog();
@@ -134,7 +137,7 @@ public class MyGuiFile extends JFrame {
 	}
 	
 	/**
-	 * Create the frame.
+	 * To create the frame.
 	 */
 	public MyGuiFile() {
 		
