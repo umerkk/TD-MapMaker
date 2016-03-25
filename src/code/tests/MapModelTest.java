@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Assert;
 import org.junit.Test;
 
-import code.map.MapModel;
+import code.game.models.MapModel;
 /**
  * Test case class to test the functionalities of the MApModel class. 
  * Most of the test cases here based on the validation of the map
@@ -156,7 +156,7 @@ public class MapModelTest {
 				{ 0, 4, 0, 0},
 				{ 0, 9999, 0, 0}}; 
 
-				Assert.assertArrayEquals(mapArray, mMapArray.GetMapArray());
+				Assert.assertArrayEquals(mapArray, mMapArray.getMapArray());
 	}
 
 	/**
@@ -178,6 +178,6 @@ public class MapModelTest {
 				{ 0, 3, 99, 0},
 				{ 0, 9999, 0, 0}}; 
 
-				Assert.assertArrayEquals(mapArray, mMapModel.GetMapArray());
+				Assert.assertArrayEquals(mapArray, mMapModel.getMapArray());
 	}
 }

@@ -1,5 +1,7 @@
 package code.map;
 
+import java.util.Date;
+
 /**
  * Utility class defining all the constants used in the map editor. 
  * This is the global class which is used to access the constants for consistency through out the program. 
@@ -20,4 +22,15 @@ public class Util {
 	public static final int TOOL_POINT_EXIT = POINT_EXIT;
 	public static final int TOOL_POINT_PATH = 2;
 	
+	
+	
+	public static String getDate(){
+		Date date = new Date();
+		return date.toString();
+	}
+
+	public static String addDate(String logText){
+		return getDate() + logText;
+	}
+
 }

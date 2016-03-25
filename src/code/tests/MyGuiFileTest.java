@@ -25,7 +25,7 @@ public class MyGuiFileTest {
 			
 		MyGuiFile mTestFrame = new MyGuiFile();
 		mTestFrame.readMapFrmFile("testmap.map", System.getProperty("user.dir") + "/maps");
-		Assert.assertArrayEquals(mapArray, mTestFrame.getMapModelObj().GetMapArray());
+		Assert.assertArrayEquals(mapArray, mTestFrame.getMapModelObj().getMapArray());
 	}
 
 }

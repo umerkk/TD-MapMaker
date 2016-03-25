@@ -1,4 +1,8 @@
-package code.map;
+package code.game.models;
+
+import java.io.Serializable;
+
+import code.map.Util;
 
 /**
  * The MapModel class is the model class for the map object. The map details are stored in this class. The map editing 
@@ -12,8 +16,12 @@ package code.map;
  * @version 1.0.0.0
  */
 
-public class MapModel extends MapLogger{
+public class MapModel extends MapLogger implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8899;
 	// attributes of the class goes here
 	private String mapName;
 	private int[][] mapArray;
@@ -46,7 +54,7 @@ public class MapModel extends MapLogger{
 		cSize = col;
 		this.mapArray = new int[row][col];
 	}
-	
+
 	/**
 	 * Method to return the name of the current map object.
 	 * 
@@ -55,16 +63,19 @@ public class MapModel extends MapLogger{
 	public String GetName() {
 		return this.mapName;
 	}
-	
+
 	/**
 	 * This method returns the map array of the current map model object.
 	 *  
 	 * @return the map model array
 	 */
-	public int[][] GetMapArray() {
+	public int[][] getMapArray() {
 		return this.mapArray;
 	}
-	
+
+	public void setMapArray(int[][] mapArray) {
+		this.mapArray = mapArray;
+	}
 	/**
 	 * Method to add a map object to the current map. The map object to be added can be a start point specified by 1, end point specified by 9999
 	 * or a path specified by a number between 1 and 9999
@@ -118,7 +129,7 @@ public class MapModel extends MapLogger{
 		for(int i = 0; i < rSize; i++){
 			mapArrayClone[i] = mapArray[i].clone();
 		}
-		
+
 		// breadth first search algorithm implementation for finding the shortest path
 		// between and the start and end point. The algorithm has been modified to calculate the
 		// distance from start node to a node, previous node of a node if a path exist through it.

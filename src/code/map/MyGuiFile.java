@@ -25,6 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.border.EmptyBorder;
 
+import code.game.models.MapModel;
+
 /**
  * This is the main view form which is displayed 1st to the user.
  * The user can decide weather to create a new map or open an existing file 
@@ -133,6 +135,7 @@ public class MyGuiFile extends JFrame {
 			JOptionPane.showMessageDialog(rootPane, "Map's height of width cannot exceed 9 block. Please try again.");
 		}else if(mapDialog.isCompleted) {
 			mapObj = new MapModel(rowNum, colNum);
+			mapObj.setCreationTime(Util.addDate(""));
 			new MapMaker(mapObj, false, this).setVisible(true);
 		}
 

@@ -27,6 +27,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import code.game.models.MapModel;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -75,9 +76,15 @@ public class MapMaker extends JFrame {
 					File file = fileChooser.getSelectedFile();
 					// save to file
 
+					
+					currMap.setEditTime(Util.addDate(""));
+					
+					// write object to file
+					
 					FileOutputStream fos= new FileOutputStream(file);
 					ObjectOutputStream oos= new ObjectOutputStream(fos); 
-					oos.writeObject(currMap.GetMapArray());
+//					oos.writeObject(currMap.GetMapArray());
+					oos.writeObject(currMap);
 					oos.close();
 					fos.close();
 					JOptionPane.showMessageDialog(null, "Your map is saved successfully.");
@@ -118,8 +125,8 @@ public class MapMaker extends JFrame {
 		if(isExistingFile) {
 			for(int k=0;k < currMap.rSize;k++) {
 				for(int i=0;i < currMap.cSize;i++) {
-					if(pathTempValue < currMap.GetMapArray()[k][i] && currMap.GetMapArray()[k][i] != 9999)
-						pathTempValue = currMap.GetMapArray()[k][i];
+					if(pathTempValue < currMap.getMapArray()[k][i] && currMap.getMapArray()[k][i] != 9999)
+						pathTempValue = currMap.getMapArray()[k][i];
 				}
 			}
 			pathTempValue++;
@@ -242,14 +249,14 @@ public class MapMaker extends JFrame {
 		//1=StartPoint, 9999=End, 2=Path, 3=Delete
 		// if the delete tool is selected
 		if(selectedTool== Util.TOOL_DELETE) {
-			if(currMap.GetMapArray()[x][y] == 1) {
+			if(currMap.getMapArray()[x][y] == 1) {
 				isStartAdded  = false;
 				buttonStart.setEnabled(true);
-			} else if(currMap.GetMapArray()[x][y] == Util.POINT_EXIT) {
+			} else if(currMap.getMapArray()[x][y] == Util.POINT_EXIT) {
 				isEndAdded  = false;
 				buttonEnd.setEnabled(true);
 			} 
-			else if(currMap.GetMapArray()[x][y] > 1) {
+			else if(currMap.getMapArray()[x][y] > 1) {
 				pathTempValue--;
 			}
 
@@ -269,7 +276,7 @@ public class MapMaker extends JFrame {
 				buttonStart.setEnabled(false);
 
 			} else if(selectedTool == Util.TOOL_POINT_PATH) {
-				if(currMap.GetMapArray()[x][y] != 1 && currMap.GetMapArray()[x][y] != Util.POINT_EXIT) {
+				if(currMap.getMapArray()[x][y] != 1 && currMap.getMapArray()[x][y] != Util.POINT_EXIT) {
 					DrawMapItem(2, cell);
 					//  mapArray[x][y] = pathTempValue;
 					//  pathTempValue++;
@@ -375,17 +382,17 @@ public class MapMaker extends JFrame {
 					});
 
 					// drawing the current map model on the grid
-					if(currMap.GetMapArray()[k][i] == 1) {
+					if(currMap.getMapArray()[k][i] == 1) {
 						DrawMapItem(1, temp);
 						isStartAdded  = true;
 						buttonStart.setEnabled(false);
 
-					}  else if(currMap.GetMapArray()[k][i] == 9999) {
+					}  else if(currMap.getMapArray()[k][i] == 9999) {
 						DrawMapItem(9999, temp);
 						isEndAdded = true;
 						buttonEnd.setEnabled(false);
 
-					} else if(currMap.GetMapArray()[k][i] == 0) {
+					} else if(currMap.getMapArray()[k][i] == 0) {
 						DrawMapItem(0, temp);
 					} else {
 						DrawMapItem(2,temp);
