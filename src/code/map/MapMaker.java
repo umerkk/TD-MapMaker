@@ -70,7 +70,7 @@ public class MapMaker extends JFrame {
 
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setCurrentDirectory(new File(DEFAULT_FILE_PATH));
-				fileChooser.setSelectedFile(new File(currMap.GetName() + ".map"));
+				fileChooser.setSelectedFile(new File(currMap.getMapName() + ".map"));
 				if (fileChooser.showSaveDialog(MapMaker.this) == JFileChooser.APPROVE_OPTION) {
 
 					File file = fileChooser.getSelectedFile();

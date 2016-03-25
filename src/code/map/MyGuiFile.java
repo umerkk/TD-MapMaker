@@ -77,17 +77,22 @@ public class MyGuiFile extends JFrame {
 	public void readMapFrmFile(String filename, String path) {
 		File file = new File(path + "//" + filename);
 
-		int[][] maparray;  
-
 		try {
 			FileInputStream fis = new FileInputStream(file);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			// map array read from the file
-			maparray = (int[][]) ois.readObject();
+
+			MapModel mapModel = (MapModel) ois.readObject();
 			ois.close();
 			fis.close();
 
-			mapObj = new MapModel(filename.substring(0, filename.length() - 4), maparray);
+			MapModel newMap = new MapModel(filename.substring(0, filename.length() - 4), mapModel.getMapArray());
+
+			//newMap.setMapName(mapModel.getMapName());
+			newMap.setPlayHistory(mapModel.getPlayHistory());
+			newMap.setTopFiveScores(mapModel.getTopFiveScores());
+			newMap.setCreationTime(mapModel.getCreationTime());
+			newMap.setEditTime(mapModel.getEditTime());
+			mapObj = newMap;
 
 		}catch(IOException ioe){
 			ioe.printStackTrace();

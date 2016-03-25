@@ -23,7 +23,6 @@ public class MapModel extends MapLogger implements Serializable{
 	 */
 	private static final long serialVersionUID = 8899;
 	// attributes of the class goes here
-	private String mapName;
 	private int[][] mapArray;
 	public int rSize, cSize;
 
@@ -35,7 +34,7 @@ public class MapModel extends MapLogger implements Serializable{
 	 * @param mapArray the map array of the model (usually read from the file)
 	 */
 	public MapModel(String mapName, int[][] mapArray) {
-		this.mapName = mapName;
+		super.setMapName(mapName);
 		rSize = mapArray.length;
 		cSize = mapArray[0].length;
 		this.mapArray = mapArray.clone();
@@ -49,20 +48,20 @@ public class MapModel extends MapLogger implements Serializable{
 	 * @param col number of columns in the map
 	 */
 	public MapModel(int row, int col) {
-		this.mapName = this.toString().substring(9);
+		super.setMapName(this.toString().substring(9));
 		rSize = row;
 		cSize = col;
 		this.mapArray = new int[row][col];
 	}
 
-	/**
-	 * Method to return the name of the current map object.
-	 * 
-	 * @return name of the map.
-	 */
-	public String GetName() {
-		return this.mapName;
-	}
+	//	/**
+	//	 * Method to return the name of the current map object.
+	//	 * 
+	//	 * @return name of the map.
+	//	 */
+	//	public String GetName() {
+	//		return this.mapName;
+	//	}
 
 	/**
 	 * This method returns the map array of the current map model object.
