@@ -12,7 +12,7 @@ package code.map;
  * @version 1.0.0.0
  */
 
-public class MapModel {
+public class MapModel extends MapLogger{
 
 	// attributes of the class goes here
 	private String mapName;
