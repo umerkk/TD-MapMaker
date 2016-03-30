@@ -48,7 +48,7 @@ public class MapModel extends MapLogger implements Serializable{
 	 * @param col number of columns in the map
 	 */
 	public MapModel(int row, int col) {
-		super.setMapName(this.toString().substring(9));
+		super.setMapName(this.toString().substring(17));
 		rSize = row;
 		cSize = col;
 		this.mapArray = new int[row][col];
