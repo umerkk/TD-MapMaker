@@ -17,8 +17,8 @@ import javax.swing.border.EmptyBorder;
  * NewMapDialog class is used for defining the grid dimensions of the new map which is to be created. 
  * It allows the user to specify the row and column dimension of the map between 4 and 9.
  * 
- * @author Armaghan
- * @author Iftikhar
+ * @author Lokesh
+ * @author Umer
  * @version 1.0.1.0
  */
 @SuppressWarnings("serial")

@@ -12,7 +12,7 @@ import code.game.models.MapModel;
  * to ensure its correctness.
  * 
  * @author Lokesh
- * @author Armaghan
+ * @author Iftikhar
  * @version 1.0.0.0
  */
 public class MapModelTest {

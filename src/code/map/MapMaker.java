@@ -215,6 +215,7 @@ public class MapMaker extends JFrame {
 		menuBar.add(mnFile);
 
 		JMenuItem mntmSave = new JMenuItem("Save");
+		
 		// save button event handler
 		mntmSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -277,9 +278,7 @@ public class MapMaker extends JFrame {
 
 			} else if(selectedTool == Util.TOOL_POINT_PATH) {
 				if(currMap.getMapArray()[x][y] != 1 && currMap.getMapArray()[x][y] != Util.POINT_EXIT) {
-					DrawMapItem(2, cell);
-					//  mapArray[x][y] = pathTempValue;
-					//  pathTempValue++;
+					DrawMapItem(2, cell);					
 				} else {
 					overideExisting=true;
 				}
@@ -416,6 +415,7 @@ public class MapMaker extends JFrame {
 					JPanel temp = new JPanel();
 					temp.setName(k +""+ i);
 					temp.setBorder(BorderFactory.createEtchedBorder(1));
+					
 					// adding action listener for the panel on which the cell is drawn
 					temp.addMouseListener(new MouseListener() {
 

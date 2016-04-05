@@ -54,15 +54,6 @@ public class MapModel extends MapLogger implements Serializable{
 		this.mapArray = new int[row][col];
 	}
 
-	//	/**
-	//	 * Method to return the name of the current map object.
-	//	 * 
-	//	 * @return name of the map.
-	//	 */
-	//	public String GetName() {
-	//		return this.mapName;
-	//	}
-
 	/**
 	 * This method returns the map array of the current map model object.
 	 *  
@@ -260,5 +251,4 @@ public class MapModel extends MapLogger implements Serializable{
 		mapArray = mapArrayClone;
 		return  true;
 	}
-
 }

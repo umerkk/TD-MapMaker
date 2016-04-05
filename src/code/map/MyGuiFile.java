@@ -33,7 +33,7 @@ import code.game.models.MapModel;
  * for editing.
  * 
  * @author lokesh
- * @author M.Umer
+ * @author Armaghan
  * @version 1.0.1.0
  * 
  */
@@ -170,7 +170,7 @@ public class MyGuiFile extends JFrame {
 		});
 
 		mnNewMenu.add(mntmNewMenuItem);
-
+		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Open ");
 		// action listener for the open menu item for opening a new file.
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
@@ -236,5 +236,4 @@ public class MyGuiFile extends JFrame {
 		panel.add(btnNewButton);
 		updateTxtPn();
 	}
-
 }

@@ -22,13 +22,15 @@ public class Util {
 	public static final int TOOL_POINT_EXIT = POINT_EXIT;
 	public static final int TOOL_POINT_PATH = 2;
 	
-	
-	
+		
 	public static String getDate(){
 		Date date = new Date();
 		return date.toString();
 	}
 
+	/*
+	 * @param logText for certain aspect of game
+	 */
 	public static String addDate(String logText){
 		return getDate() + logText;
 	}
