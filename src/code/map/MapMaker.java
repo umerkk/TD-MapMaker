@@ -76,14 +76,14 @@ public class MapMaker extends JFrame {
 					File file = fileChooser.getSelectedFile();
 					// save to file
 
-					
+
 					currMap.addEditHistory(Util.addDate(""));
-					
+
 					// write object to file
-					
+
 					FileOutputStream fos= new FileOutputStream(file);
 					ObjectOutputStream oos= new ObjectOutputStream(fos); 
-//					oos.writeObject(currMap.GetMapArray());
+					//					oos.writeObject(currMap.GetMapArray());
 					oos.writeObject(currMap);
 					oos.close();
 					fos.close();
@@ -110,7 +110,7 @@ public class MapMaker extends JFrame {
 	 * @param prntfile the parent form of the current object  
 	 */
 	public MapMaker(MapModel mMapModel, boolean isExistingFile, MyGuiFile prntfile) {
-		
+
 		// update the parent combo box
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -118,7 +118,7 @@ public class MapMaker extends JFrame {
 				prntfile.updateTxtPn();
 			}
 		});
-		
+
 		currMap = mMapModel;
 		MigLayout myGrid = new MigLayout();
 
@@ -215,7 +215,7 @@ public class MapMaker extends JFrame {
 		menuBar.add(mnFile);
 
 		JMenuItem mntmSave = new JMenuItem("Save");
-		
+
 		// save button event handler
 		mntmSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -246,7 +246,7 @@ public class MapMaker extends JFrame {
 		char[] name_exploded = tempName.toCharArray();
 		int x = Integer.parseInt(String.valueOf(name_exploded[0]));
 		int y = Integer.parseInt(String.valueOf(name_exploded[1]));
-		
+
 		//1=StartPoint, 9999=End, 2=Path, 3=Delete
 		// if the delete tool is selected
 		if(selectedTool== Util.TOOL_DELETE) {
@@ -415,7 +415,7 @@ public class MapMaker extends JFrame {
 					JPanel temp = new JPanel();
 					temp.setName(k +""+ i);
 					temp.setBorder(BorderFactory.createEtchedBorder(1));
-					
+
 					// adding action listener for the panel on which the cell is drawn
 					temp.addMouseListener(new MouseListener() {
 

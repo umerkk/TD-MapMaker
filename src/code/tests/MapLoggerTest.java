@@ -65,7 +65,7 @@ public class MapLoggerTest {
 
 		String currTime = Util.addDate("");
 		mTestFrame.getMapModelObj().addEditHistory(currTime);
-		
+
 		try {
 			File file = new File(System.getProperty("user.dir") + "/maps/tempmap.map");
 

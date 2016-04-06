@@ -10,7 +10,7 @@ import java.util.Date;
  * @version 1.0.0.0
  */
 public class Util {
-	
+
 	// Entry point of map
 	public static final int POINT_ENTRY = 1;
 	// Exit point of map
@@ -21,8 +21,8 @@ public class Util {
 	public static final int TOOL_POINT_ENTRY = POINT_ENTRY;
 	public static final int TOOL_POINT_EXIT = POINT_EXIT;
 	public static final int TOOL_POINT_PATH = 2;
-	
-		
+
+
 	public static String getDate(){
 		Date date = new Date();
 		return date.toString();

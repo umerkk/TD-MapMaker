@@ -29,7 +29,7 @@ public class NewMapDialog extends JDialog {
 	public JSpinner colInput = new JSpinner();
 	public JSpinner rowInput = new JSpinner();
 	public boolean isCompleted = false;
-	
+
 	/**
 	 * Main method of the class which instantiates the object and display the window to the player.
 	 * 
@@ -88,7 +88,7 @@ public class NewMapDialog extends JDialog {
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 		JButton okButton = new JButton("OK");
-		
+
 		// action listener for the OK button
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -97,7 +97,7 @@ public class NewMapDialog extends JDialog {
 				dispose();
 			}
 		});
-		
+
 		okButton.setActionCommand("OK");
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
@@ -110,7 +110,7 @@ public class NewMapDialog extends JDialog {
 				dispose();
 			}
 		});
-		
+
 		cancelButton.setActionCommand("Cancel");
 		buttonPane.add(cancelButton);
 

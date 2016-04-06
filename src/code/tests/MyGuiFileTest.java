@@ -3,12 +3,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 
-import javax.swing.JFileChooser;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-import code.map.MapMaker;
 import code.map.MyGuiFile;
 import code.map.Util;
 
