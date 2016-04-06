@@ -12,7 +12,7 @@ import code.game.models.MapModel;
  * to ensure its correctness.
  * 
  * @author Lokesh
- * @author Iftikhar
+ * @author Armaghan
  * @version 1.0.0.0
  */
 public class MapModelTest {
@@ -156,9 +156,54 @@ public class MapModelTest {
 				{ 0, 4, 0, 0},
 				{ 0, 9999, 0, 0}}; 
 
-				Assert.assertArrayEquals(mapArray, mMapArray.getMapArray());
+			Assert.assertArrayEquals(mapArray, mMapArray.getMapArray());
 	}
 
+	/**
+	 * Test to check if a path object can be successfully deleted from the map.
+	 */
+	@Test
+	public void testdeletePath() {
+		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
+			{ 0, 2, 0, 0},
+			{ 0, 3, 0, 0},
+			{ 0, 9999, 0, 0}}; 
+
+			MapModel mMapArray = new MapModel("testmap", mapArray);
+			mMapArray.DeleteFromMap(2, 1);
+
+			mapArray =  new int[][]{ { 0, 1, 0, 0 },
+				{ 0, 2, 0, 0},
+				{ 0, 0, 0, 0},
+				{ 0, 9999, 0, 0}}; 
+
+			Assert.assertArrayEquals(mapArray, mMapArray.getMapArray());
+	}
+	
+	/**
+	 * Test to check if a path object deletion and creation operations can be integrated successfully in the map.
+	 */
+	@Test
+	public void testmodifyPath() {
+		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
+			{ 0, 2, 0, 0},
+			{ 0, 3, 0, 0},
+			{ 0, 9999, 0, 0}}; 
+
+			MapModel mMapArray = new MapModel("testmap", mapArray);
+			mMapArray.AddToMap(4, 1, 2);
+			mMapArray.DeleteFromMap(2, 1);
+			mMapArray.AddToMap(5, 2, 2);
+			mMapArray.AddToMap(6, 3, 2);
+			
+			mapArray =  new int[][]{ { 0, 1, 0, 0 },
+				{ 0, 2, 4, 0},
+				{ 0, 0, 5, 0},
+				{ 0, 9999, 6, 0}}; 
+
+			Assert.assertArrayEquals(mapArray, mMapArray.getMapArray());
+	}
+	
 	/**
 	 * Test to check if a map validation with multiple path between start and end point 
 	 * will generate the shortest path between the start and end point.
