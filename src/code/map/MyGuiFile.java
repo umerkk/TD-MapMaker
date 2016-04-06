@@ -91,7 +91,7 @@ public class MyGuiFile extends JFrame {
 			newMap.setPlayHistory(mapModel.getPlayHistory());
 			newMap.setTopFiveScores(mapModel.getTopFiveScores());
 			newMap.setCreationTime(mapModel.getCreationTime());
-			newMap.setEditTime(mapModel.getEditTime());
+			newMap.setEditHistory(mapModel.getEditHistory());
 			mapObj = newMap;
 
 		}catch(IOException ioe){

@@ -24,7 +24,7 @@ public class MapLogger implements Serializable{
 	// attributes of the class goes here
 	private String mapName;
 	private String creationTime;
-	private String editTime;
+	private ArrayList<String> editHistory;
 	private ArrayList<String> playHistory = new ArrayList<String>();
 	private ArrayList<String> topFiveScores = new ArrayList<String>();
 	private File filePath;
@@ -82,16 +82,27 @@ public class MapLogger implements Serializable{
 	 * returns the time and date of the map file when it was edited.
 	 * @return string containing date, day, month year and time of the map file when it was edited last time
 	 */
-	public String getEditTime() {
-		return editTime;
+	public ArrayList<String> getEditHistory() {
+		return editHistory;
 	}
 	
 	/**
 	 * sets the date, day, month year and time of the map file when it was last edited
-	 * @param editTime string containing date, day, month year and time of the map file
+	 * @param editHistory string containing date, day, month year and time of the map file
 	 */
-	public void setEditTime(String editTime) {
-		this.editTime = editTime;
+	public void setEditHistory(ArrayList<String> editHistory) {
+		this.editHistory = editHistory;
+	}
+	
+	/**
+	 * appends edit history for record keeping
+	 * @param time current time
+	 */
+	public void addEditHistory(String time){
+		if(editHistory==null){
+			editHistory = new ArrayList<String>();
+		}
+		editHistory.add(time);
 	}
 	
 	/**

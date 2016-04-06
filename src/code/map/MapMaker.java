@@ -77,7 +77,7 @@ public class MapMaker extends JFrame {
 					// save to file
 
 					
-					currMap.setEditTime(Util.addDate(""));
+					currMap.addEditHistory(Util.addDate(""));
 					
 					// write object to file
 					
