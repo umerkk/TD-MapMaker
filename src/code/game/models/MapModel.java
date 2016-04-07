@@ -19,9 +19,11 @@ import code.map.Util;
 public class MapModel extends MapLogger implements Serializable{
 
 	/**
-	 * a unique ID used for serialization when reading writing a class object
+	 * a unique ID used for serialization when reading writing a class object 
+	 * This attribute does not need to comply with coding standard due to serialization
+	 * dependency. 
 	 */
-	private static final long SERIAL_VERSION_UID = 8899;
+	private static final long serialVersionUID = 8899;
 	// attributes of the class goes here
 	private int[][] mapArray;
 	public int rSize, cSize;
