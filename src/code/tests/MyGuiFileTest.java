@@ -46,8 +46,8 @@ public class MyGuiFileTest {
 
 			MyGuiFile mTestFrame = new MyGuiFile();
 			mTestFrame.readMapFrmFile("testmap.map", System.getProperty("user.dir") + "/maps");
-			mTestFrame.getMapModelObj().DeleteFromMap(2, 2);
-			mTestFrame.getMapModelObj().AddToMap(4, 3, 1);
+			mTestFrame.getMapModelObj().deleteFromMap(2, 2);
+			mTestFrame.getMapModelObj().addToMap(4, 3, 1);
 
 			// set edit time according to the modifications.
 			mTestFrame.getMapModelObj().addEditHistory(Util.addDate(""));

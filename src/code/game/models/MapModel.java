@@ -21,7 +21,7 @@ public class MapModel extends MapLogger implements Serializable{
 	/**
 	 * a unique ID used for serialization when reading writing a class object
 	 */
-	private static final long serialVersionUID = 8899;
+	private static final long SERIAL_VERSION_UID = 8899;
 	// attributes of the class goes here
 	private int[][] mapArray;
 	public int rSize, cSize;
@@ -75,7 +75,7 @@ public class MapModel extends MapLogger implements Serializable{
 	 * @param col column position of the map where the object is to be added
 	 * @return if the map object has been successfully added to the map.
 	 */
-	public Boolean AddToMap(int type, int row, int col) {
+	public Boolean addToMap(int type, int row, int col) {
 		if(row > mapArray.length || col > mapArray[0].length) {
 			return false;
 		} else if(mapArray[row][col] == 0) {
@@ -93,7 +93,7 @@ public class MapModel extends MapLogger implements Serializable{
 	 * @param col column position of the map where the object is to be deleted
 	 * @return if the map object has been successfully deleted from the map.
 	 */
-	public Boolean DeleteFromMap(int row, int col) {
+	public Boolean deleteFromMap(int row, int col) {
 		if(row > mapArray.length || col > mapArray[0].length) {
 			return false;
 		} else {

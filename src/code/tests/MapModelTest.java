@@ -149,7 +149,7 @@ public class MapModelTest {
 			{ 0, 9999, 0, 0}}; 
 
 			MapModel mMapArray = new MapModel("testmap", mapArray);
-			mMapArray.AddToMap(4, 2, 1);
+			mMapArray.addToMap(4, 2, 1);
 
 			mapArray =  new int[][]{ { 0, 1, 0, 0 },
 				{ 0, 2, 0, 0},
@@ -163,14 +163,14 @@ public class MapModelTest {
 	 * Test to check if a path object can be successfully deleted from the map.
 	 */
 	@Test
-	public void testdeletePath() {
+	public void testDeletePath() {
 		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
 			{ 0, 2, 0, 0},
 			{ 0, 3, 0, 0},
 			{ 0, 9999, 0, 0}}; 
 
 			MapModel mMapArray = new MapModel("testmap", mapArray);
-			mMapArray.DeleteFromMap(2, 1);
+			mMapArray.deleteFromMap(2, 1);
 
 			mapArray =  new int[][]{ { 0, 1, 0, 0 },
 				{ 0, 2, 0, 0},
@@ -184,17 +184,17 @@ public class MapModelTest {
 	 * Test to check if a path object deletion and creation operations can be integrated successfully in the map.
 	 */
 	@Test
-	public void testmodifyPath() {
+	public void testModifyPath() {
 		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
 			{ 0, 2, 0, 0},
 			{ 0, 3, 0, 0},
 			{ 0, 9999, 0, 0}}; 
 
 			MapModel mMapArray = new MapModel("testmap", mapArray);
-			mMapArray.AddToMap(4, 1, 2);
-			mMapArray.DeleteFromMap(2, 1);
-			mMapArray.AddToMap(5, 2, 2);
-			mMapArray.AddToMap(6, 3, 2);
+			mMapArray.addToMap(4, 1, 2);
+			mMapArray.deleteFromMap(2, 1);
+			mMapArray.addToMap(5, 2, 2);
+			mMapArray.addToMap(6, 3, 2);
 
 			mapArray =  new int[][]{ { 0, 1, 0, 0 },
 				{ 0, 2, 4, 0},

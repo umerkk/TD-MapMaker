@@ -46,7 +46,7 @@ public class MyGuiFile extends JFrame {
 	private final String DEFAULT_FILE_PATH = System.getProperty("user.dir") + "/maps";
 	private MapModel mapObj;
 
-	public MapModel getMapModelObj() {return mapObj;}
+	public MapModel getMapModelObj() { return mapObj; }
 
 	/**
 	 * Main method of the class where the execution begins. The applications is invoked from this main method. It takes command line arguments 
@@ -71,11 +71,11 @@ public class MyGuiFile extends JFrame {
 	 * Method to read an already existing map from file and create a map model object of the read map. The name of the map file and 
 	 * the absolute path to the folder containing the file is passed to the method.
 	 * 
-	 * @param filename name of the map file.
+	 * @param fileName name of the map file.
 	 * @param path path to the folder containing the map file.
 	 */
-	public void readMapFrmFile(String filename, String path) {
-		File file = new File(path + "//" + filename);
+	public void readMapFrmFile(String fileName, String path) {
+		File file = new File(path + "//" + fileName);
 
 		try {
 			FileInputStream fis = new FileInputStream(file);
@@ -85,7 +85,7 @@ public class MyGuiFile extends JFrame {
 			ois.close();
 			fis.close();
 
-			MapModel newMap = new MapModel(filename.substring(0, filename.length() - 4), mapModel.getMapArray());
+			MapModel newMap = new MapModel(fileName.substring(0, fileName.length() - 4), mapModel.getMapArray());
 
 			//newMap.setMapName(mapModel.getMapName());
 			newMap.setPlayHistory(mapModel.getPlayHistory());
@@ -171,9 +171,9 @@ public class MyGuiFile extends JFrame {
 
 		mnNewMenu.add(mntmNewMenuItem);
 
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Open ");
+		JMenuItem mntmNewMenuItem1 = new JMenuItem("Open ");
 		// action listener for the open menu item for opening a new file.
-		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+		mntmNewMenuItem1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				JFileChooser fileChooser = new JFileChooser();
@@ -186,7 +186,7 @@ public class MyGuiFile extends JFrame {
 				}
 			}
 		});
-		mnNewMenu.add(mntmNewMenuItem_1);
+		mnNewMenu.add(mntmNewMenuItem1);
 
 		JSeparator separator = new JSeparator();
 		mnNewMenu.add(separator);

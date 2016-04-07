@@ -20,7 +20,7 @@ public class MapLogger implements Serializable{
 	/**
 	 * a unique ID used for serialization when reading writing a class object
 	 */
-	private static final long serialVersionUID = 8899;
+	private static final long SERIAL_VERSION_UID = 8899;
 	// attributes of the class goes here
 	private String mapName;
 	private String creationTime;

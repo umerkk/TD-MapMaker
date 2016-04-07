@@ -136,7 +136,7 @@ public class MapMaker extends JFrame {
 		mapPanel.setLayout(new MigLayout());
 
 		panelsHolder = new JPanel[currMap.rSize][currMap.cSize];
-		DrawMap(isExistingFile, mapPanel);
+		drawMap(isExistingFile, mapPanel);
 
 		setTitle("Tower Defence - Map Maker");
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -224,11 +224,11 @@ public class MapMaker extends JFrame {
 		});
 		mnFile.add(mntmSave);
 
-		ScrollPane sc_panel = new ScrollPane();
-		sc_panel.setBounds(10, 172, 914, 527);
+		ScrollPane scPanel = new ScrollPane();
+		scPanel.setBounds(10, 172, 914, 527);
 
-		sc_panel.add(mapPanel,null);
-		contentPane.add(sc_panel);
+		scPanel.add(mapPanel,null);
+		contentPane.add(scPanel);
 
 	}
 
@@ -243,9 +243,9 @@ public class MapMaker extends JFrame {
 
 		boolean overideExisting=false;
 		String tempName = cell.getName();
-		char[] name_exploded = tempName.toCharArray();
-		int x = Integer.parseInt(String.valueOf(name_exploded[0]));
-		int y = Integer.parseInt(String.valueOf(name_exploded[1]));
+		char[] nameExploded = tempName.toCharArray();
+		int x = Integer.parseInt(String.valueOf(nameExploded[0]));
+		int y = Integer.parseInt(String.valueOf(nameExploded[1]));
 
 		//1=StartPoint, 9999=End, 2=Path, 3=Delete
 		// if the delete tool is selected
@@ -261,7 +261,7 @@ public class MapMaker extends JFrame {
 				pathTempValue--;
 			}
 
-			currMap.DeleteFromMap(x, y);
+			currMap.deleteFromMap(x, y);
 
 			cell.removeAll();
 			cell.setBackground(null);
@@ -271,20 +271,20 @@ public class MapMaker extends JFrame {
 
 			// if the other tool is selected, it is handled here
 			if(selectedTool == Util.TOOL_POINT_ENTRY){
-				DrawMapItem(1, cell);
+				drawMapItem(1, cell);
 
 				isStartAdded  = true;
 				buttonStart.setEnabled(false);
 
 			} else if(selectedTool == Util.TOOL_POINT_PATH) {
 				if(currMap.getMapArray()[x][y] != 1 && currMap.getMapArray()[x][y] != Util.POINT_EXIT) {
-					DrawMapItem(2, cell);					
+					drawMapItem(2, cell);					
 				} else {
 					overideExisting=true;
 				}
 
 			} else if (selectedTool== Util.TOOL_POINT_EXIT){
-				DrawMapItem(Util.POINT_EXIT, cell);
+				drawMapItem(Util.POINT_EXIT, cell);
 				isEndAdded = true;
 				buttonEnd.setEnabled(false);
 			}
@@ -293,10 +293,10 @@ public class MapMaker extends JFrame {
 		// modifying the map model object based tool action performed above
 		if(selectedTool != 3 && !overideExisting) {
 			if(selectedTool==2) {
-				currMap.AddToMap(pathTempValue, x, y);
+				currMap.addToMap(pathTempValue, x, y);
 				pathTempValue++;
 			} else {
-				currMap.AddToMap(selectedTool, x, y);
+				currMap.addToMap(selectedTool, x, y);
 			}
 		}
 
@@ -311,7 +311,7 @@ public class MapMaker extends JFrame {
 	 * @param type type of the map object to be drawn 
 	 * @param cell cell on which the object needs to be drawn
 	 */
-	private void DrawMapItem(int type, JPanel cell) {
+	private void drawMapItem(int type, JPanel cell) {
 
 		JLabel t = new JLabel();
 		t.setForeground(Color.WHITE);
@@ -340,14 +340,14 @@ public class MapMaker extends JFrame {
 	 * @param isExisting whether the map model is existing 
 	 * @param parentPanel parent panel on which the map is to be drawn
 	 */
-	private void DrawMap(boolean isExisting, Panel parentPanel) {
+	private void drawMap(boolean isExisting, Panel parentPanel) {
 		if(isExisting) {
 			for(int k=0;k < currMap.rSize;k++) {
 				for(int i=0;i < currMap.cSize;i++) {
 
-					String _append = "";
+					String append = "";
 					if(i == currMap.cSize-1) {
-						_append = ", wrap";
+						append = ", wrap";
 					} else {
 
 					}
@@ -382,22 +382,22 @@ public class MapMaker extends JFrame {
 
 					// drawing the current map model on the grid
 					if(currMap.getMapArray()[k][i] == 1) {
-						DrawMapItem(1, temp);
+						drawMapItem(1, temp);
 						isStartAdded  = true;
 						buttonStart.setEnabled(false);
 
 					}  else if(currMap.getMapArray()[k][i] == 9999) {
-						DrawMapItem(9999, temp);
+						drawMapItem(9999, temp);
 						isEndAdded = true;
 						buttonEnd.setEnabled(false);
 
 					} else if(currMap.getMapArray()[k][i] == 0) {
-						DrawMapItem(0, temp);
+						drawMapItem(0, temp);
 					} else {
-						DrawMapItem(2,temp);
+						drawMapItem(2,temp);
 					}
 
-					parentPanel.add(temp, "width 80, height 80" + _append);
+					parentPanel.add(temp, "width 80, height 80" + append);
 					panelsHolder[k][i] = temp;
 				}
 			}
@@ -405,9 +405,9 @@ public class MapMaker extends JFrame {
 		} else {
 			for(int k=0;k<currMap.rSize;k++) {
 				for(int i=0;i<currMap.cSize;i++) {
-					String _append = "";
+					String append = "";
 					if(i==currMap.cSize-1) {
-						_append = ", wrap";
+						append = ", wrap";
 					} else {
 
 					}
@@ -441,7 +441,7 @@ public class MapMaker extends JFrame {
 						}
 					});
 
-					parentPanel.add(temp, "width 80, height 80" + _append);
+					parentPanel.add(temp, "width 80, height 80" + append);
 					panelsHolder[k][i] = temp;
 				}
 			}
