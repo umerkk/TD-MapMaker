@@ -23,13 +23,20 @@ public class Util {
 	public static final int TOOL_POINT_PATH = 2;
 
 
+	/**
+	 * Method to get the current date and time as string.
+	 * @return Returns the current date time as a string.
+	 */
 	public static String getDate(){
 		Date date = new Date();
 		return date.toString();
 	}
 
-	/*
-	 * @param logText for certain aspect of game
+	/**
+	 * Method to add current date time to a log entry.
+	 * 
+	 * @param logText log entry to which date time has to be added.
+	 * @return log entry with the current date time appended to it.
 	 */
 	public static String addDate(String logText){
 		return getDate() + logText;

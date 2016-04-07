@@ -46,6 +46,10 @@ public class MyGuiFile extends JFrame {
 	private final String DEFAULT_FILE_PATH = System.getProperty("user.dir") + "/maps";
 	private MapModel mapObj;
 
+	/**
+	 * Method to expose the map model object.
+	 * @return map model object which is currently being used by the application.
+	 */
 	public MapModel getMapModelObj() { return mapObj; }
 
 	/**
@@ -172,7 +176,9 @@ public class MyGuiFile extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem);
 
 		JMenuItem mntmNewMenuItem1 = new JMenuItem("Open ");
-		// action listener for the open menu item for opening a new file.
+		/**
+		 *  action listener for the open menu item for opening a new file.
+		 */
 		mntmNewMenuItem1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -194,7 +200,9 @@ public class MyGuiFile extends JFrame {
 		JMenu mnHelp = new JMenu("About");
 		menuBar.add(mnHelp);
 
-		// action listener for about menu item 
+		/**
+		 *  action listener for about menu item 
+		 */
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mntmAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -221,7 +229,9 @@ public class MyGuiFile extends JFrame {
 		panel.add(comboBox);
 
 		JButton btnNewButton = new JButton("Open File");
-		// action listener for open file button to open the file selected in the combo box.
+		/**
+		 *  action listener for open file button to open the file selected in the combo box.
+		 */
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(comboBox.getItemCount() == 1 || comboBox.getSelectedItem() == null)

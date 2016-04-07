@@ -23,7 +23,7 @@ public class MapLogger implements Serializable{
 	 * dependency.
 	 */
 	private static final long serialVersionUID = 8899;
-	// attributes of the class goes here
+	// attributes for storing map details and log info
 	private String mapName;
 	private String creationTime;
 	private ArrayList<String> editHistory;

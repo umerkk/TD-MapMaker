@@ -12,7 +12,6 @@ import code.map.Util;
  *    
  * @author Lokesh
  * @author Umer
- * 
  * @version 1.0.0.0
  */
 
@@ -24,7 +23,7 @@ public class MapModel extends MapLogger implements Serializable{
 	 * dependency. 
 	 */
 	private static final long serialVersionUID = 8899;
-	// attributes of the class goes here
+	// attributes for storing the map
 	private int[][] mapArray;
 	public int rSize, cSize;
 

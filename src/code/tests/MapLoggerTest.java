@@ -13,6 +13,13 @@ import code.game.models.MapModel;
 import code.map.MyGuiFile;
 import code.map.Util;
 
+/**
+ * This class contains test case methods for testing the log entries which are recorded in the map file and
+ * also the details of the map such as the creation time, history of edits, etc.
+ * 
+ * @author lokesh
+ * @version 1.0.1.0
+ */
 public class MapLoggerTest {
 
 	/**
@@ -22,6 +29,7 @@ public class MapLoggerTest {
 	@Test
 	public void testMapCreatnTime() {
 
+		// create a map model object
 		int[][] mapArray =  new int[][]{ { 0, 1, 0, 0 },
 			{ 0, 2, 0, 0},
 			{ 0, 3, 4, 0},
@@ -38,7 +46,6 @@ public class MapLoggerTest {
 				// write object to file
 				FileOutputStream fos= new FileOutputStream(file);
 				ObjectOutputStream oos= new ObjectOutputStream(fos); 
-				//				oos.writeObject(currMap.GetMapArray());
 				oos.writeObject(mMapModel);
 				oos.close();
 				fos.close();
@@ -47,6 +54,8 @@ public class MapLoggerTest {
 				Assert.fail("Exception");
 			}
 
+			// read back the file and check if the creation time in the map matches with the 
+			// expected creation time.
 			MyGuiFile  mTestFrame = new MyGuiFile();
 			mTestFrame.readMapFrmFile("tempmap.map", System.getProperty("user.dir") + "/maps");
 			assertTrue(creatnTime.equals(mTestFrame.getMapModelObj().getCreationTime()));
@@ -60,9 +69,11 @@ public class MapLoggerTest {
 	@Test
 	public void testMapEditTime() {
 
+		// read a already existing map from file.
 		MyGuiFile  mTestFrame = new MyGuiFile();
 		mTestFrame.readMapFrmFile("tempmap.map", System.getProperty("user.dir") + "/maps");
 
+		// add an edit time to the file
 		String currTime = Util.addDate("");
 		mTestFrame.getMapModelObj().addEditHistory(currTime);
 
@@ -81,6 +92,8 @@ public class MapLoggerTest {
 			Assert.fail("Exception");
 		}
 
+		// read the map file agian and check if the last edit time matches with the 
+		// expected edit time.
 		mTestFrame = new MyGuiFile();
 		mTestFrame.readMapFrmFile("tempmap.map", System.getProperty("user.dir") + "/maps");
 		assertTrue(mTestFrame.getMapModelObj().getEditHistory().contains(currTime));

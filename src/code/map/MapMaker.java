@@ -42,7 +42,7 @@ import net.miginfocom.swing.MigLayout;
 @SuppressWarnings("serial")
 public class MapMaker extends JFrame {
 
-	// class attribute declarations
+	// viewer class attribute declaration
 	private JPanel contentPane; // main container panel
 	private MapModel currMap; // MapModel class to hold the map object
 	private Panel mapPanel = new Panel(); // panel to hold the map grid
@@ -74,16 +74,12 @@ public class MapMaker extends JFrame {
 				if (fileChooser.showSaveDialog(MapMaker.this) == JFileChooser.APPROVE_OPTION) {
 
 					File file = fileChooser.getSelectedFile();
-					// save to file
-
-
+					
 					currMap.addEditHistory(Util.addDate(""));
 
 					// write object to file
-
 					FileOutputStream fos= new FileOutputStream(file);
 					ObjectOutputStream oos= new ObjectOutputStream(fos); 
-					//					oos.writeObject(currMap.GetMapArray());
 					oos.writeObject(currMap);
 					oos.close();
 					fos.close();

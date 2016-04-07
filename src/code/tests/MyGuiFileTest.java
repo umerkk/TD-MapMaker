@@ -58,7 +58,6 @@ public class MyGuiFileTest {
 				// write object to file
 				FileOutputStream fos= new FileOutputStream(file);
 				ObjectOutputStream oos= new ObjectOutputStream(fos); 
-				//				oos.writeObject(currMap.GetMapArray());
 				oos.writeObject(mTestFrame.getMapModelObj());
 				oos.close();
 				fos.close();

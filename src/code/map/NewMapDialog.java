@@ -24,7 +24,7 @@ import javax.swing.border.EmptyBorder;
 @SuppressWarnings("serial")
 public class NewMapDialog extends JDialog {
 
-	// attributes of the class goes here 
+	// attributes for handling UI outside class.
 	private JPanel contentPanel = new JPanel();
 	public JSpinner colInput = new JSpinner();
 	public JSpinner rowInput = new JSpinner();
